@@ -31,10 +31,61 @@
             <canvas id="mainChart"></canvas>
         </div>
 
+        <div style="font-family: sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px;">
+            <h2>Przebieg Sum Numerologicznych w różnych systemach liczbowych</h2>
+            <p>
+                Wykres pokazuje, jak zmienia się wartość sumy numerologicznej (czyli suma cyfr daty)
+                w zależności od przyjętej bazy liczbowej (Base2–Base16). Każda linia reprezentuje
+                inny system liczbowy. Grube punkty oznaczają tzw. <em>Liczby Mistrzowskie</em>.
+            </p>
+
+            <ul>
+                <li><strong>Charakter ząbkowany:</strong> linie mają cykliczne wzrosty i spadki,
+                    wynikające z różnych reguł zapisu i sumowania cyfr w danej bazie.</li>
+                <li><strong>Różnice skali:</strong> w niskich bazach (Base2–Base6) wartości utrzymują się
+                    na poziomie ok. 5–20, natomiast w wyższych (Base13–Base16) sięgają powyżej 50.</li>
+                <li><strong>Zróżnicowane rytmy:</strong> przebiegi nie są równoległe – każdy system liczbowy
+                    tworzy własny wzór, własną „melodię” zmian.</li>
+                <li><strong>Liczby Mistrzowskie:</strong> zaznaczone punkty pojawiają się w różnych bazach,
+                    ale nie synchronicznie i bez stałego rytmu.</li>
+            </ul>
+
+            <p>
+                <strong>Wniosek:</strong> suma numerologiczna nie jest uniwersalną wartością,
+                lecz funkcją wybranego systemu liczbowego. Każda baza wytwarza własny rytm
+                i własne punkty szczególne, które z perspektywy numerologii
+                wyglądają równie „naturalnie”.
+            </p>
+        </div>
+
+
         <div id="chart-container-base10-correlation" class="chart-container">
             <div class="chart-title" id="base10-correlation-chart-title"></div>
             <div class="chart-subtitle" id="base10-correlation-chart-subtitle"></div>
             <canvas id="base10CorrelationChart"></canvas>
+        </div>
+
+        <div style="font-family: sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px;">
+            <h2>Korelacja z Base10: Wnioski</h2>
+            <p>
+                Wykres przedstawia, ile z 15 aktywnych systemów liczbowych (Base2–Base16)
+                daje w danym dniu identyczną sumę numerologiczną jak system dziesiętny (Base10).
+                Kolorowe słupki pokazują systemy, które „trafiły” w wynik Base10,
+                natomiast szary pas oznacza brak korelacji.
+            </p>
+
+            <ul>
+                <li><strong>Dominacja szarości:</strong> Zdecydowana większość systemów nie koreluje z Base10.</li>
+                <li><strong>Sporadyczne pokrycia:</strong> Czasami 2–4 systemy naraz dają tę samą sumę co Base10, ale to
+                    wyjątek.</li>
+                <li><strong>Wniosek główny:</strong> Base10 nie ma matematycznej przewagi – jego wyjątkowość
+                    wynika z kulturowego przyjęcia jako standardu, a nie z uniwersalnej prawdy.</li>
+            </ul>
+
+            <p>
+                Innymi słowy: <em>system dziesiętny nie jest bardziej „prawdziwy” niż inne –
+                    po prostu został przyjęty przez ludzi jako punkt odniesienia.</em>
+            </p>
         </div>
 
         <div id="chart-container-correlation" class="chart-container">
@@ -43,10 +94,81 @@
             <canvas id="correlationChart"></canvas>
         </div>
 
+        <div style="font-family: sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px;">
+            <h2>Wnioski z wykresów korelacji</h2>
+
+            <h3>1. Korelacja z Base10</h3>
+            <p>
+                Pierwszy wykres pokazuje, ile z 15 aktywnych systemów liczbowych (Base2–Base16)
+                daje w danym dniu identyczną sumę numerologiczną jak system dziesiętny (Base10).
+            </p>
+            <ul>
+                <li>Większość systemów <strong>nie pokrywa się z Base10</strong> – dominuje szary pas oznaczający brak
+                    korelacji.</li>
+                <li>Sporadycznie zdarza się, że 2–4 systemy dają ten sam wynik co Base10.</li>
+                <li><strong>Wniosek:</strong> korelacja z Base10 jest wyjątkiem, a nie regułą. System dziesiętny
+                    nie ma matematycznej przewagi – jego „prawdziwość” jest kulturowa, nie uniwersalna.</li>
+            </ul>
+
+            <h3>2. Korelacja sum numerologicznych między systemami</h3>
+            <p>
+                Drugi wykres pokazuje, ile systemów liczbowych daje tę samą sumę numerologiczną między sobą,
+                niezależnie od Base10. Kolory oznaczają konkretne wartości sum (np. 7, 11, 21, 33).
+            </p>
+            <ul>
+                <li>Korelacje są częste i rozproszone – występują na wielu różnych sumach, nie tylko „magicznych”.</li>
+                <li>Zdarzają się dni, gdy nawet 8–10 systemów naraz daje identyczny wynik.</li>
+                <li><strong>Wniosek:</strong> systemy liczbowo-symboliczne często tworzą chwilowe sojusze,
+                    ale są one chaotyczne i nietrwałe. To potwierdza, że numerologia bazuje na
+                    <em>lokalnych zbiegach arytmetycznych</em>, a nie na uniwersalnym porządku.
+                </li>
+            </ul>
+
+            <h3>3. Porównanie obu wykresów</h3>
+            <ul>
+                <li><strong>Wykres 1:</strong> Base10 rzadko ma „sojuszników”, jest raczej samotny.</li>
+                <li><strong>Wykres 2:</strong> między różnymi bazami pojawia się sporo korelacji,
+                    które jednak nie koncentrują się wokół jednej „prawdziwej” wartości.</li>
+            </ul>
+
+            <p>
+                Podsumowując: <strong>Base10 nie jest wyjątkowe</strong>, a numerologia w różnych bazach
+                generuje liczne, ale przypadkowe punkty wspólne. To pokazuje arbitralność systemów liczbowych
+                i brak jednej „uprzywilejowanej” formy prawdy.
+            </p>
+        </div>
+
         <div id="chart-container-magic" class="chart-container">
             <div class="chart-title" id="magic-chart-title"></div>
             <div class="chart-subtitle" id="magic-chart-subtitle"></div>
             <canvas id="magicChart"></canvas>
+        </div>
+        <div style="font-family: sans-serif; line-height:1.6; max-width:900px; margin:0 auto; padding:20px;">
+            <h2>Wystąpienia Liczb Mistrzowskich w różnych bazach</h2>
+            <p>
+                Wykres pokazuje, w ilu aktywnych systemach liczbowych (Base2–Base16) dana data
+                prowadzi do <em>Liczby Mistrzowskiej</em> — tzn. suma cyfr po przeliczeniu na daną bazę
+                składa się z identycznych znaków (np. <strong>11</strong>, <strong>22</strong>, <strong>AA</strong>,
+                <strong>BB</strong>).
+                Oś pionowa to liczba baz, w których tego dnia pojawia się taki wzór (maks. 15).
+            </p>
+
+            <ul>
+                <li><strong>Częstość ≈ 1:</strong> Najczęściej widzimy słupek o wysokości <strong>1</strong> — w danym
+                    dniu przynajmniej jedna baza daje liczbę mistrzowską.</li>
+                <li><strong>Epizodyczne skoki:</strong> Okazyjnie pojawiają się dni z wartością <strong>2–3</strong>
+                    (rzadko <strong>4</strong>) — kilka baz jednocześnie tworzy liczbę mistrzowską.</li>
+                <li><strong>Brak długich „pustyń”:</strong> Zdarzenia są rozproszone dość równomiernie w czasie; dłuższe
+                    ciągi bez żadnego trafienia występują rzadko.</li>
+            </ul>
+
+            <p>
+                <strong>Wniosek:</strong> tzw. liczby mistrzowskie nie są obiektywnie rzadkie, gdy patrzymy jednocześnie
+                na wiele baz.
+                Ich obecność to efekt kombinatoryki zapisu i sumowania w różnych systemach liczbowych — wzorzec zależy
+                od przyjętej bazy,
+                a nie od specjalnego „przywileju” danej daty.
+            </p>
         </div>
 
 
