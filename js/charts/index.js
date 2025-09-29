@@ -21,9 +21,9 @@ export function updateSubtitles(activeBases) {
         CHART_DESCRIPTIONS.main.subtitle(activeCount, baseRange);
 
     document.getElementById('correlation-chart-title').textContent = 
-        'Korelacja vs Niekorelacja Sum Base10';
+        CHART_DESCRIPTIONS.correlation.title;
     document.getElementById('correlation-chart-subtitle').textContent = 
-        `Wykres pokazuje zarówno korelację (ile BaseX daje tę samą sumę - niebieski) jak i niekorelację (ile BaseX daje unikalną sumę - czerwony). Maksymalna wartość to ${activeCount} aktywnych systemów.`;
+        CHART_DESCRIPTIONS.correlation.subtitle(activeCount);
 
     document.getElementById('magic-chart-title').textContent = CHART_DESCRIPTIONS.magic.title;
     document.getElementById('magic-chart-subtitle').textContent = 

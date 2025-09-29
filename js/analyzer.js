@@ -73,22 +73,6 @@ export function analyzeDates(dateFrom, dateTo, activeBases) {
         results[base] = baseResults;
     }
 
-    // Obliczanie niekorelacji (unikalne sumy)
-    dateLabels.forEach(dateStr => {
-        const counts = dailyCorrelationData[dateStr].sumCounts;
-        const nonCorrelatingBases = [];
-
-        Object.entries(counts).forEach(([sum, bases]) => {
-            const activeBasesForSum = bases.filter(b => activeBases.includes(b));
-            if (activeBasesForSum.length === 1) {
-                nonCorrelatingBases.push(activeBasesForSum[0]);
-            }
-        });
-
-        dailyCorrelationData[dateStr].nonCorrelatingCount = nonCorrelatingBases.length;
-        dailyCorrelationData[dateStr].nonCorrelatingBases = nonCorrelatingBases.sort((a, b) => a - b);
-    });
-
     return { results, dateLabels, dailyCorrelationData };
 }
 
@@ -137,17 +121,22 @@ export function getCorrelationDetails(dateStr, dailyCorrelationData, activeBases
  */
 export function getNonCorrelationDetails(dateStr, dailyCorrelationData) {
     const data = dailyCorrelationData[dateStr];
-    const uniqueCount = data.nonCorrelatingCount;
+    const sumCounts = data.sumCounts;
+    
+    const nonCorrelatingBases = [];
+    Object.entries(sumCounts).forEach(([sum, bases]) => {
+        if (bases.length === 1) {
+            nonCorrelatingBases.push(bases[0]);
+        }
+    });
 
-    if (uniqueCount === 0) {
+    if (nonCorrelatingBases.length === 0) {
         return ['Brak BaseX z unikalną sumą Base10 (wszystkie korelują z inną aktywną BaseX).'];
     }
 
-    const bases = data.nonCorrelatingBases;
-
     return [
         'Bazy z unikalną sumą Base10 (nie korelują z innymi aktywnymi bazami):',
-        `  ${bases.join(', ')}`
+        `  ${nonCorrelatingBases.sort((a, b) => a - b).join(', ')}`
     ];
 }
 

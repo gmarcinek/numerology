@@ -9,14 +9,9 @@ export const CHART_DESCRIPTIONS = {
             `Pokazuje, jaką jedną liczbę (Suma Base10) otrzymujemy, sumując wszystkie cyfry daty zapisanej w różnych systemach liczbowych (BaseX). Każda linia to inny system pozycyjny. Grube punkty oznaczają Liczby Mistrzowskie.`
     },
     correlation: {
-        title: "Korelacja: Jak często sumy cyfr w dniach przeliczone na system dziesiętny się powtarzają?",
+        title: "Korelacja Sum Base10: Ile BaseX daje powtórzoną sumę?",
         subtitle: (count) => 
-            `Wykres słupkowy mierzy, ile maksymalnie aktywnych systemów liczbowych daje tę samą Sumę przeliczoną na Base10 w danym dniu. Wysoki słupek oznacza silną korelację (wiele BaseX prowadzi do tej samej liczby).`
-    },
-    nonCorrelation: {
-        title: "NIEKORELACJA: Liczba unikalnych Sum Base10",
-        subtitle: (count) => 
-            `Wykres mierzy, ile aktywnych systemów liczbowych ma w danym dniu zupełnie unikalną sumę dni przeliczoną na system dziesiętny. Wysoki punkt oznacza silną niekorelację (różnorodność wyników), czyli dzień, w którym różne BaseX prowadzą do różnych wyników.`
+            `Wykres pokazuje, ile z ${count} aktywnych systemów liczbowych daje w danym dniu sumę Base10, która powtarza się w innym systemie. Im wyższy słupek, tym więcej BaseX "zgadza się" ze sobą (koreluje). Maksymalna wartość: ${count} BaseX.`
     },
     magic: {
         title: "Wystąpienia Liczb Mistrzowskich (np. 11, 22, AA, BB)",

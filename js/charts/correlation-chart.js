@@ -1,13 +1,13 @@
 /* =================================================================
-   WYKRES KORELACJI I NIEKORELACJI - Połączony
+   WYKRES KORELACJI - Ile BaseX daje powtórzoną sumę
    ================================================================= */
 
-import { getCorrelationDetails, getNonCorrelationDetails } from '../analyzer.js';
+import { getCorrelationDetails } from '../analyzer.js';
 
 let chartInstanceCorrelation = null;
 
 /**
- * Rysuje połączony wykres korelacji i niekorelacji
+ * Rysuje wykres korelacji - ile BaseX uczestniczy w powtórzeniach sum
  * @param {Array<string>} labels - Etykiety dat
  * @param {Object} dailyCorrelationData - Dane korelacji
  * @param {Array<number>} activeBases - Aktywne bazy
@@ -17,14 +17,20 @@ export function drawCorrelationChart(labels, dailyCorrelationData, activeBases, 
     let ctx = document.getElementById('correlationChart').getContext('2d');
     const maxBases = activeBases.length;
 
-    const correlationData = labels.map(date => {
+    // Ile BaseX uczestniczy w korelacji (ma sumę powtórzoną z inną BaseX)
+    const correlatingData = labels.map(date => {
         const counts = dailyCorrelationData[date].sumCounts;
-        const maxCount = Object.values(counts).length > 0 ?
-            Math.max(...Object.values(counts).map(arr => arr.filter(b => activeBases.includes(b)).length)) : 1;
-        return maxCount > 1 ? maxCount : 0;
+        let correlatingBases = new Set();
+        
+        Object.entries(counts).forEach(([sum, bases]) => {
+            const activeBasesForSum = bases.filter(b => activeBases.includes(b));
+            if (activeBasesForSum.length > 1) {
+                activeBasesForSum.forEach(b => correlatingBases.add(b));
+            }
+        });
+        
+        return correlatingBases.size;
     });
-
-    const nonCorrelationData = labels.map(date => dailyCorrelationData[date].nonCorrelatingCount);
 
     if (chartInstanceCorrelation) chartInstanceCorrelation.destroy();
 
@@ -32,31 +38,18 @@ export function drawCorrelationChart(labels, dailyCorrelationData, activeBases, 
         type: 'bar',
         data: {
             labels: labels,
-            datasets: [
-                {
-                    label: 'Korelacja (max powtórzeń sumy Base10)',
-                    data: correlationData,
-                    backgroundColor: '#377eb8',
-                    borderWidth: 1,
-                    yAxisID: 'y'
-                },
-                {
-                    label: 'Niekorelacja (unikalne sumy Base10)',
-                    data: nonCorrelationData,
-                    backgroundColor: '#e41a1c',
-                    borderWidth: 1,
-                    yAxisID: 'y'
-                }
-            ]
+            datasets: [{
+                label: 'Liczba BaseX korelujących',
+                data: correlatingData,
+                backgroundColor: '#377eb8',
+                borderWidth: 1
+            }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { 
-                    display: true,
-                    position: 'top'
-                },
+                legend: { display: false },
                 title: { display: false },
                 tooltip: {
                     callbacks: {
@@ -65,28 +58,11 @@ export function drawCorrelationChart(labels, dailyCorrelationData, activeBases, 
                         },
                         label: function (context) {
                             const value = context.parsed.y;
-                            const datasetLabel = context.dataset.label;
-                            
-                            if (datasetLabel.includes('Korelacja')) {
-                                return value === 0 
-                                    ? 'Brak korelacji' 
-                                    : `Max. Powtórzeń: ${value}x`;
-                            } else {
-                                return `Unikalne sumy: ${value}`;
-                            }
+                            return `BaseX korelujących: ${value} / ${maxBases}`;
                         },
                         afterBody: function (context) {
                             const date = context[0].label;
-                            const datasetLabel = context[0].dataset.label;
-                            
-                            if (datasetLabel.includes('Korelacja')) {
-                                return getCorrelationDetails(date, dailyCorrelationData, activeBases);
-                            } else {
-                                return getNonCorrelationDetails(date, dailyCorrelationData);
-                            }
-                        },
-                        footer: function(context) {
-                            return `Maksymalna wartość: ${maxBases} BaseX`;
+                            return getCorrelationDetails(date, dailyCorrelationData, activeBases);
                         }
                     }
                 }
@@ -101,7 +77,7 @@ export function drawCorrelationChart(labels, dailyCorrelationData, activeBases, 
                     beginAtZero: true,
                     max: maxBases,
                     stepSize: 1,
-                    title: { display: true, text: `Liczba BaseX (max: ${maxBases})` }
+                    title: { display: true, text: `Liczba BaseX korelujących (max: ${maxBases})` }
                 }
             },
             onClick: (e) => onClickCallback(e, chartInstanceCorrelation, labels)
