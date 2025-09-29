@@ -5,11 +5,13 @@
 import Chart from 'chart.js/auto';
 import { ALL_BASES, magicSumColorMap } from './config.js';
 import { analyzeDates } from './analyzer.js';
-
-import { drawCorrelationChart } from './charts/correlation-chart.js';
-import { drawMainChart } from './charts/main-chart.js';
-import { drawMagicChart } from './charts/magic-chart.js';
-import { updateSubtitles } from './charts/index.js';
+import { 
+    drawCorrelationChart, 
+    drawMainChart, 
+    drawMagicChart, 
+    drawBase10CorrelationChart,
+    updateSubtitles 
+} from './charts/index.js';
 import { 
     openSettingsModal, 
     closeSettingsModal, 
@@ -70,6 +72,7 @@ function runAnalysis() {
     drawMainChart(allResults, dateLabels, activeBases, handleChartClick);
     drawCorrelationChart(dateLabels, dailyCorrelationData, activeBases, handleChartClick);
     drawMagicChart(allResults, dateLabels, dailyCorrelationData, activeBases, handleChartClick);
+    drawBase10CorrelationChart(allResults, dateLabels, dailyCorrelationData, activeBases, handleChartClick);
 }
 
 /**

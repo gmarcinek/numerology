@@ -166,3 +166,37 @@ export function getMagicDetails(dateStr, dailyCorrelationData, activeBases) {
     });
     return details;
 }
+
+/**
+ * Pobiera szczegóły korelacji z Base10 dla konkretnej daty
+ * @param {string} dateStr - Data (YYYY-MM-DD)
+ * @param {Object} results - Wyniki analizy
+ * @param {Array<number>} activeBases - Aktywne bazy
+ * @returns {Array<string>} - Tablica opisów korelacji z Base10
+ */
+export function getBase10CorrelationDetails(dateStr, results, activeBases) {
+    if (!activeBases.includes(10)) {
+        return ['Base10 nie jest aktywna.'];
+    }
+
+    const base10Sum = results[10].find(r => r.date === dateStr)?.sumBase10;
+    const correlatingBases = [];
+
+    activeBases.forEach(base => {
+        if (base === 10) return;
+        const baseSum = results[base].find(r => r.date === dateStr)?.sumBase10;
+        if (baseSum === base10Sum) {
+            correlatingBases.push(base);
+        }
+    });
+
+    if (correlatingBases.length === 0) {
+        return ['Brak korelacji z Base10.', `Suma Base10: ${base10Sum}`];
+    }
+
+    return [
+        `Suma Base10: ${base10Sum}`,
+        `Korelujące BaseX (${correlatingBases.length}):`,
+        `  ${correlatingBases.join(', ')}`
+    ];
+}

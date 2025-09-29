@@ -6,6 +6,7 @@ import { drawMainChart } from './main-chart.js';
 import { drawCorrelationChart } from './correlation-chart.js';
 import { drawMagicChart } from './magic-chart.js';
 import { CHART_DESCRIPTIONS } from '../data/chart-descriptions.js';
+import { drawBase10CorrelationChart } from './base10-correlation-chart.js';
 
 /**
  * Aktualizuje tytuły i podtytuły wykresów
@@ -28,7 +29,12 @@ export function updateSubtitles(activeBases) {
     document.getElementById('magic-chart-title').textContent = CHART_DESCRIPTIONS.magic.title;
     document.getElementById('magic-chart-subtitle').textContent = 
         CHART_DESCRIPTIONS.magic.subtitle(activeCount);
+
+    document.getElementById('base10-correlation-chart-title').textContent = 
+        CHART_DESCRIPTIONS.base10Correlation.title;
+    document.getElementById('base10-correlation-chart-subtitle').textContent = 
+        CHART_DESCRIPTIONS.base10Correlation.subtitle(activeCount);
 }
 
 // Re-eksport funkcji rysujących wykresy
-export { drawMainChart, drawCorrelationChart, drawMagicChart };
+export { drawMainChart, drawCorrelationChart, drawMagicChart, drawBase10CorrelationChart };

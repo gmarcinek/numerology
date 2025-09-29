@@ -17,5 +17,10 @@ export const CHART_DESCRIPTIONS = {
         title: "Wystąpienia Liczb Mistrzowskich (np. 11, 22, AA, BB)",
         subtitle: (count) => 
             `Wykres słupkowy pokazuje, w ilu aktywnych BaseX w danym dniu data prowadzi do Liczby Mistrzowskiej (sumy składającej się z identycznych, powtarzających się cyfr po przeliczeniu na system BaseX).`
+    },
+     base10Correlation: {
+        title: "Korelacja z Base10: Ile systemów daje tę samą Sumę Numerologiczną co domyślny system ludzkości Base10?",
+        subtitle: (count) => 
+            `Wykres pokazuje, ile z ${count} aktywnych systemów liczbowych daje w danym dniu sumę Base10 identyczną jak w systemie dziesiętnym. Kolorowe stacki = korelujące BaseX, szary = niekorelujące. Base10 jako punkt odniesienia "prawdziwości".`
     }
 };
