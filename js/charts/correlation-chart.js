@@ -29,6 +29,8 @@ const CORRELATION_COLORS = [
 export function drawCorrelationChart(labels, dailyCorrelationData, activeBases, onClickCallback) {
     let ctx = document.getElementById('correlationChart').getContext('2d');
     const maxBases = activeBases.length;
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+                     || window.innerWidth < 768;
 
     // Zbierz wszystkie unikalne grupy korelacji
     let allCorrelationGroups = new Set();
@@ -100,7 +102,7 @@ export function drawCorrelationChart(labels, dailyCorrelationData, activeBases, 
             maintainAspectRatio: false,
             plugins: {
                 legend: { 
-                    display: true,
+                    display: isMobile ? false : true,
                     position: 'top',
                     labels: {
                         boxWidth: 15

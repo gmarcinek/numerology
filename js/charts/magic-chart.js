@@ -27,8 +27,8 @@ export function drawMagicChart(results, labels, dailyCorrelationData, activeBase
             datasets: [{
                 label: 'Liczba BaseX z Liczbą Mistrzowską',
                 data: magicCounts,
-                backgroundColor: magicCounts.map(val => val > 0 ? '#ff7f00' : '#cccccc'),
-                borderWidth: 1
+                backgroundColor: magicCounts.map(val => val > 0 ? '#ff5e00ff' : '#f0f0f0ff'),
+                borderWidth: 0,
             }]
         },
         options: {

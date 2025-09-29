@@ -18,7 +18,8 @@ let chartInstanceBase10Correlation = null;
  */
 export function drawBase10CorrelationChart(results, labels, dailyCorrelationData, activeBases, onClickCallback) {
     let ctx = document.getElementById('base10CorrelationChart').getContext('2d');
-    
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+                     || window.innerWidth < 768;
     // Sprawdź czy Base10 jest aktywna
     if (!activeBases.includes(10)) {
         console.warn('Base10 nie jest aktywna - wykres korelacji z Base10 wymaga Base10');
@@ -83,7 +84,7 @@ export function drawBase10CorrelationChart(results, labels, dailyCorrelationData
             maintainAspectRatio: false,
             plugins: {
                 legend: { 
-                    display: true,
+                    display: !isMobile,
                     position: 'top',
                     labels: {
                         boxWidth: 15

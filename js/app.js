@@ -39,9 +39,24 @@ let dateLabels = [];
 function setDefaultDates() {
     const now = new Date();
     const year = now.getFullYear();
+    const month = now.getMonth() + 1; // 1-12
     
-    const startDate = `${year}-01-01`;
-    const endDate = `${year}-12-31`;
+    // Wykryj mobile
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+                     || window.innerWidth < 768;
+    
+    let startDate, endDate;
+    
+    if (isMobile) {
+        // Mobile: aktualny miesiąc
+        startDate = `${year}-${String(month).padStart(2, '0')}-01`;
+        const lastDay = new Date(year, month, 0).getDate();
+        endDate = `${year}-${String(month).padStart(2, '0')}-${String(lastDay).padStart(2, '0')}`;
+    } else {
+        // Desktop: cały rok
+        startDate = `${year}-01-01`;
+        endDate = `${year}-12-31`;
+    }
     
     document.getElementById('dateFrom').value = startDate;
     document.getElementById('dateTo').value = endDate;

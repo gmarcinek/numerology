@@ -10,6 +10,10 @@ body {
     box-sizing: border-box;
     font-family: sans-serif;
     background: #f4f4f4;
+    overflow-x: hidden;
+}
+* {
+    box-sizing: border-box;
 }
 
 /* =================================================================
@@ -53,7 +57,7 @@ body {
     flex-direction: column;
     width: 100vw;
     box-sizing: border-box;
-    padding: 16px;
+    padding: 0px;
 }
 
 .chart-container {
@@ -268,6 +272,21 @@ body {
     margin-top: 20px;
 }
 
+#controls input[type="date"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    min-height: 24px;
+}
+
+#controls label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-weight: 500;
+}
+
 /* =================================================================
    RESPONSIVE
    ================================================================= */
@@ -285,5 +304,70 @@ body {
 
     #details-drawer {
         width: 100%;
+    }
+}
+
+@media (max-width: 700px) {
+    body {
+        font-size: x-small;
+    }
+    #controls {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 2px;
+        gap: 2px;
+    }
+
+    #chart-area {
+        padding: 2px;
+    }
+
+    .chart-container {
+        padding: 2px;
+        padding-bottom: 190px;
+        padding-right: 18px;
+        margin-bottom: 2px;
+        height: 50vh;
+    }
+
+    .chart-title {
+        margin-left: 0;
+        font-size: 1.2em;
+        padding: 12px 0px 0px 8px ;
+    }
+
+    .chart-subtitle {
+        margin-left: 0;
+        padding: 8px;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin-top: 10%;
+        padding: 2px;
+    }
+
+    #details-drawer {
+        width: 100%;
+        padding: 2px;
+    }
+
+    #details-drawer .drawer-header {
+        padding-bottom: 2px;
+        margin-bottom: 2px;
+    }
+
+    #base-settings {
+        padding: 2px;
+        gap: 2px;
+    }
+
+    #base-settings label {
+        padding: 2px;
+    }
+
+    .setting-controls {
+        gap: 2px;
+        margin-bottom: 2px;
     }
 }

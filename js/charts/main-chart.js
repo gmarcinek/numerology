@@ -33,11 +33,13 @@ function getBaseColor(base) {
 export function drawMainChart(results, labels, activeBases, onClickCallback) {
     let ctx = document.getElementById('mainChart').getContext('2d');
     let datasets = [];
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+                     || window.innerWidth < 768;
 
     activeBases.forEach((base) => {
         let data = results[base].map(r => r.sumBase10);
-        let pointRadius = results[base].map(r => r.magic ? 6 : 3);
-        let pointBorderWidth = results[base].map(r => r.magic ? 2 : 0);
+        let pointRadius = results[base].map(r => r.magic ? 6 : 1);
+        let pointBorderWidth = results[base].map(r => r.magic ? 1 : 0);
         let color = getBaseColor(base);
 
         datasets.push({
@@ -66,7 +68,10 @@ export function drawMainChart(results, labels, activeBases, onClickCallback) {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { position: 'top' },
+                legend: { 
+                    position: 'top',
+                    display: !isMobile,
+                },
                 title: { display: false },
                 tooltip: {
                     callbacks: {
