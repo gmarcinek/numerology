@@ -6,7 +6,7 @@ import { getCorrelationDetails } from '../analyzer.js';
 
 let chartInstanceCorrelation = null;
 
-// Paleta kolorów dla różnych grup korelacji
+// Paleta kolorów dla różnych grup korelacji (od najciemniejszych do najjaśniejszych)
 const CORRELATION_COLORS = [
     '#e41a1c', // czerwony
     '#377eb8', // niebieski
@@ -16,11 +16,10 @@ const CORRELATION_COLORS = [
     '#ffff33', // żółty
     '#a65628', // brązowy
     '#f781bf', // różowy
-    '#999999'  // szary
 ];
 
 /**
- * Rysuje wykres korelacji - ile BaseX uczestniczy w powtórzeniach sum
+ * Rysuje wykres korelacji - nachodzące słupki pokazujące maksymalną korelację
  * @param {Array<string>} labels - Etykiety dat
  * @param {Object} dailyCorrelationData - Dane korelacji
  * @param {Array<number>} activeBases - Aktywne bazy
@@ -30,62 +29,45 @@ export function drawCorrelationChart(labels, dailyCorrelationData, activeBases, 
     let ctx = document.getElementById('correlationChart').getContext('2d');
     const maxBases = activeBases.length;
 
-    // Zbierz wszystkie unikalne grupy korelacji
-    let allCorrelationGroups = new Set();
-    labels.forEach(date => {
+    // Dla każdego dnia, znajdź wszystkie grupy korelacji i posortuj po wielkości
+    const dailyCorrelations = labels.map(date => {
         const counts = dailyCorrelationData[date].sumCounts;
+        const groups = [];
+        
         Object.entries(counts).forEach(([sum, bases]) => {
             const activeBasesForSum = bases.filter(b => activeBases.includes(b));
             if (activeBasesForSum.length > 1) {
-                allCorrelationGroups.add(sum);
+                groups.push({
+                    sum: parseInt(sum),
+                    count: activeBasesForSum.length,
+                    bases: activeBasesForSum
+                });
             }
         });
+        
+        // Sortuj po count malejąco (największe grupy jako pierwsze)
+        return groups.sort((a, b) => b.count - a.count);
     });
 
-    const correlationGroupsArray = Array.from(allCorrelationGroups).sort((a, b) => a - b);
+    // Znajdź maksymalną liczbę grup w dowolnym dniu
+    const maxGroups = Math.max(...dailyCorrelations.map(d => d.length), 1);
 
-    // Dataset dla każdej grupy korelacji
-    const datasets = correlationGroupsArray.map((sum, idx) => {
-        const data = labels.map(date => {
-            const counts = dailyCorrelationData[date].sumCounts;
-            if (counts[sum]) {
-                const activeBasesForSum = counts[sum].filter(b => activeBases.includes(b));
-                return activeBasesForSum.length > 1 ? activeBasesForSum.length : 0;
-            }
-            return 0;
+    // Utwórz datasety - od największych (z tyłu) do najmniejszych (z przodu)
+    const datasets = [];
+    for (let i = 0; i < maxGroups; i++) {
+        const data = dailyCorrelations.map(groups => {
+            return groups[i] ? groups[i].count : 0;
         });
 
-        return {
-            label: `Korelacja na sumie ${sum}`,
+        datasets.push({
+            label: `Grupa korelacji ${i + 1}`,
             data: data,
-            backgroundColor: CORRELATION_COLORS[idx % CORRELATION_COLORS.length],
-            borderWidth: 0,
-            stack: 'stack1'
-        };
-    });
-
-    // Dataset dla niekorelujących BaseX (szary)
-    const nonCorrelatingData = labels.map(date => {
-        const counts = dailyCorrelationData[date].sumCounts;
-        let correlatingCount = 0;
-        
-        Object.entries(counts).forEach(([sum, bases]) => {
-            const activeBasesForSum = bases.filter(b => activeBases.includes(b));
-            if (activeBasesForSum.length > 1) {
-                correlatingCount += activeBasesForSum.length;
-            }
+            backgroundColor: CORRELATION_COLORS[i % CORRELATION_COLORS.length] + 'DD', // Przezroczystość
+            borderColor: CORRELATION_COLORS[i % CORRELATION_COLORS.length],
+            borderWidth: 2,
+            order: maxGroups - i // Większy order = z tyłu, mniejszy = z przodu
         });
-        
-        return maxBases - correlatingCount;
-    });
-
-    datasets.push({
-        label: 'Niekorelujące',
-        data: nonCorrelatingData,
-        backgroundColor: '#cccccc',
-        borderWidth: 0,
-        stack: 'stack1'
-    });
+    }
 
     if (chartInstanceCorrelation) chartInstanceCorrelation.destroy();
 
@@ -103,7 +85,17 @@ export function drawCorrelationChart(labels, dailyCorrelationData, activeBases, 
                     display: true,
                     position: 'top',
                     labels: {
-                        boxWidth: 15
+                        boxWidth: 15,
+                        generateLabels: function(chart) {
+                            return chart.data.datasets.map((dataset, i) => ({
+                                text: `Grupa ${i + 1} (od największej)`,
+                                fillStyle: dataset.backgroundColor,
+                                strokeStyle: dataset.borderColor,
+                                lineWidth: dataset.borderWidth,
+                                hidden: false,
+                                index: i
+                            }));
+                        }
                     }
                 },
                 title: { display: false },
@@ -116,12 +108,18 @@ export function drawCorrelationChart(labels, dailyCorrelationData, activeBases, 
                         label: function (context) {
                             const value = context.parsed.y;
                             if (value === 0) return null;
-                            return `${context.dataset.label}: ${value} BaseX`;
+                            const dateIdx = context.dataIndex;
+                            const groupIdx = context.datasetIndex;
+                            const group = dailyCorrelations[dateIdx][groupIdx];
+                            if (group) {
+                                return `Suma ${group.sum}: ${group.count} BaseX (${group.bases.join(', ')})`;
+                            }
+                            return null;
                         },
                         footer: function(context) {
                             const date = context[0].label;
                             const details = getCorrelationDetails(date, dailyCorrelationData, activeBases);
-                            return ['\nSzczegóły:', ...details];
+                            return ['\nWszystkie korelacje:', ...details];
                         }
                     }
                 }
@@ -130,15 +128,13 @@ export function drawCorrelationChart(labels, dailyCorrelationData, activeBases, 
                 x: { 
                     display: true, 
                     title: { display: true, text: 'Data' },
-                    ticks: { display: false },
-                    stacked: true
+                    ticks: { display: false }
                 },
                 y: {
                     beginAtZero: true,
                     max: maxBases,
                     stepSize: 1,
-                    title: { display: true, text: `Liczba BaseX (max: ${maxBases})` },
-                    stacked: true
+                    title: { display: true, text: `Maksymalna korelacja (max: ${maxBases} BaseX)` }
                 }
             },
             onClick: (e) => onClickCallback(e, chartInstanceCorrelation, labels)
