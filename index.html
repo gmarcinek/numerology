@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Numerologia - Analiza Korelacji, Mistrzowskich i Base2-Base40</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Usprawnione style UI/UX */
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            box-sizing: border-box;
+            font-family: sans-serif;
+            background: #f4f4f4;
+        }
+
+        #controls {
+            width: 100vw;
+            box-sizing: border-box;
+            padding: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+        }
+
+        /* Dodano style dla przycisków */
+        #controls button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        #controls button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Sekcja wyjaśniająca (już nie na stałe, tylko w modalu) */
+        #explanation-container {
+            padding: 0;
+            margin: 0;
+            background: none;
+            box-shadow: none;
+        }
+
+        #chart-area {
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            box-sizing: border-box;
+            padding: 16px;
+        }
+
+        .chart-container {
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 16px;
+            background: #fff;
+            border-radius: 6px;
+            padding: 32px;
+            padding-bottom: 140px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            height: 70vh;
+        }
+
+        .chart-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+            margin-left: 2rem;
+        }
+
+        .chart-subtitle {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 1rem;
+            max-width: 552px;
+
+            margin-left: 2rem;
+        }
+
+        /* Modal Ustawień, Szczegółów i Wyjaśnienia */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 1200px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+        }
+
+        /* Sekcja ustawień BaseX */
+        #base-settings {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        #base-settings label {
+            min-width: 60px;
+            padding: 5px;
+            border: 1px solid #eee;
+            border-radius: 3px;
+            background: #f9f9f9;
+            cursor: pointer;
+        }
+
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .details-table th,
+        .details-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .details-table th {
+            background-color: #f0f0f0;
+        }
+
+        .correlated {
+            background-color: #e6f7ff;
+            font-weight: bold;
+        }
+
+        .setting-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Style dla Modala Wyjaśniającego */
+        #explanation-modal .explanation-section {
+            padding: 10px 0;
+        }
+
+        #explanation-modal h3 {
+            color: #1a73e8;
+            /* Nowy kolor dla sekcji */
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+            margin-top: 20px;
+        }
+
+        #explanation-modal p {
+            margin-top: 10px;
+            line-height: 1.7;
+        }
+
+        #explanation-modal .conclusion {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+
+        @media (max-width: 700px) {
+            #controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin-top: 10%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="controls">
+        <label>Od: <input type="date" id="dateFrom" value="2025-01-01"></label>
+        <label>Do: <input type="date" id="dateTo" value="2025-12-31"></label>
+        <button onclick="openSettingsModal()">Ustawienia BaseX (2-40)</button>
+        <button onclick="openExplanationModal()">Wyjaśnienie / O Baleniu Numerologii</button>
+        <button onclick="runAnalysis()">Oblicz i Pokaż Wykresy</button>
+    </div>
+
+    <div id="chart-area">
+        <div id="chart-container-main" class="chart-container">
+            <div class="chart-title" id="main-chart-title"></div>
+            <div class="chart-subtitle" id="main-chart-subtitle"></div>
+            <canvas id="mainChart"></canvas>
+        </div>
+
+        <div id="chart-container-correlation" class="chart-container">
+            <div class="chart-title" id="correlation-chart-title"></div>
+            <div class="chart-subtitle" id="correlation-chart-subtitle"></div>
+            <canvas id="correlationChart"></canvas>
+        </div>
+
+        <div id="chart-container-non-correlation" class="chart-container">
+            <div class="chart-title" id="non-correlation-chart-title"></div>
+            <div class="chart-subtitle" id="non-correlation-chart-subtitle"></div>
+            <canvas id="nonCorrelationChart"></canvas>
+        </div>
+
+        <div id="chart-container-magic" class="chart-container">
+            <div class="chart-title" id="magic-chart-title"></div>
+            <div class="chart-subtitle" id="magic-chart-subtitle"></div>
+            <canvas id="magicChart"></canvas>
+        </div>
+    </div>
+
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSettingsModal()">&times;</span>
+            <h2>Ustawienia Wykresów BaseX (2-40)</h2>
+
+            <div class="setting-controls">
+                <button onclick="toggleAllBases(true)">Wybierz Wszystkie (2-40)</button>
+                <button onclick="toggleAllBases(false)">Odznacz Wszystkie</button>
+            </div>
+
+            <div id="base-settings">
+            </div>
+
+            <button onclick="applySettings()" style="margin-top: 20px; padding: 10px;">Zastosuj i Uruchom
+                Analizę</button>
+        </div>
+    </div>
+
+    <div id="explanation-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeExplanationModal()">&times;</span>
+            <div id="explanation-container">
+                <h2 style="color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px;">Po co to całe zamieszanie?
+                    Systemy Liczbowe kontra Numerologia</h2>
+
+                <div class="explanation-section">
+                    <h3>1. Wprowadzenie: Czym są Pozycyjne Systemy Liczbowe (BaseX)?</h3>
+                    <p>
+                        Codziennie używamy <strong>Systemu Dziesiętnego (Base 10)</strong>, który do zapisu liczb
+                        wykorzystuje dziesięć cyfr (0-9). System liczbowy to jednak tylko <strong>narzędzie
+                            zapisu</strong>, a nie uniwersalne prawo natury.
+                    </p>
+                    <p>
+                        Na świecie istnieją dziesiątki innych, równie poprawnych systemów (BaseX), na przykład:
+                    <ul>
+                        <li><strong>System Binarny (Base 2)</strong>: Używa tylko cyfr 0 i 1.</li>
+                        <li><strong>System Ósemkowy (Base 8)</strong>: Używa cyfr 0-7.</li>
+                        <li><strong>System Szesnastkowy (Base 16)</strong>: Używa cyfr 0-9 oraz liter A-F.</li>
+                    </ul>
+                    <span style="font-style: italic;">Zmiana systemu liczbowego całkowicie zmienia
+                        <strong>zapis</strong> daty (np. 29.09.1993 w Base 10 to 35.11.3711 w Base 8), ale nie zmienia
+                        jej faktycznej wartości.</span>
+                    </p>
+                </div>
+
+                <div class="explanation-section">
+                    <h3>2. Hipoteza i Logika Analizy</h3>
+                    <p>
+                        Numerologia twierdzi, że liczby uzyskane z daty (przez sumowanie jej cyfr) mają
+                        <strong>uniwersalne, magiczne znaczenie</strong> i wpływają na życie człowieka.
+                    </p>
+                    <p>
+                        <strong>Test Logiczny (Hipoteza):</strong> Jeżeli numerologia miałaby uniwersalną wartość, to
+                        jej wyniki (np. suma cyfr daty, tzw. "Liczba Życia") <strong>powinny być niezależne od tego, w
+                            jakim systemie liczbowym zapiszemy datę</strong>.
+                    </p>
+                    <p style="font-weight: bold;">
+                        Jeżeli to samo zdarzenie (ta sama data) daje różne wyniki w zależności od BaseX, oznacza to, że
+                        wynik nie jest uniwersalny.
+                    </p>
+                </div>
+
+                <div class="explanation-section">
+                    <h3>3. Co udowadniają wykresy? (Wniosek) 🛑</h3>
+                    <p>
+                        Wykresy pokazują, że test numerologii nie zdaje:
+                    <ol>
+                        <li><strong>Suma cyfr jest zależna od BaseX:</strong> Różne linie na pierwszym wykresie (np.
+                            Base 10, Base 16, Base 3) pokazują drastycznie różne wartości dla tej samej daty. Wynik
+                            numerologii zależy od systemu liczbowego!</li>
+                        <li><strong>Liczby Mistrzowskie są losowe:</strong> Częstotliwość występowania "Liczb
+                            Mistrzowskich" (np. 11, 22, AA, BB), które są kluczowe w numerologii, jest
+                            <strong>całkowicie przypadkowa</strong> i zmienia się z BaseX. Przykładowo, dla stycznia
+                            2025: w Base 10 mamy 2 Liczby Mistrzowskie, ale w Base 3 jest ich aż 8.
+                        </li>
+                    </ol>
+                    </p>
+                    <p class="conclusion" style="font-size: 1.1em; font-weight: bold;">
+                        Wniosek jest jednoznaczny: Wyniki numerologii są całkowicie zależne od przypadku i arbitralnych
+                        konwencji zapisu. To dowodzi, że numerologia nie ma żadnej uniwersalnej wartości.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeDetailsModal()">&times;</span>
+            <h2 id="details-date">Szczegóły dla: </h2>
+            <div id="details-content">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- SŁOWNIK OPISÓW WYKRESÓW (Human-Friendly) ---
+        const CHART_DESCRIPTIONS = {
+            main: {
+                title: "Wykres Sumy Numerologicznej (Base10) dla Różnych Systemów Liczbowych od Base2 do Base40",
+                subtitle: (count, range) => `Pokazuje, jaką jedną liczbę (Suma Base10) otrzymujemy, sumując wszystkie cyfry daty zapisanej w różnych systemach liczbowych (BaseX). Każda linia to inny system pozycyjny. Grube punkty oznaczają Liczby Mistrzowskie.`
+            },
+            correlation: {
+                title: "Korelacja: Jak często sumy cyfr w dniach przeliczone na system dziesiętny się powtarzają?",
+                subtitle: (count) => `Wykres słupkowy mierzy, ile maksymalnie aktywnych systemów liczbowych daje tę samą Sumę przeliczoną na Base10 w danym dniu. Wysoki słupek oznacza silną korelację (wiele BaseX prowadzi do tej samej liczby).`
+            },
+            nonCorrelation: {
+                title: "NIEKORELACJA: Liczba unikalnych Sum Base10",
+                subtitle: (count) => `Wykres mierzy, ile aktywnych systemów liczbowych ma w danym dniu zupełnie unikalną sumę dni przeliczoną na system dziesiętny. Wysoki punkt oznacza silną niekorelację (różnorodność wyników), czyli dzień, w którym różne BaseX prowadzą do różnych wyników.`
+            },
+            magic: {
+                title: "Wystąpienia Liczb Mistrzowskich (np. 11, 22, AA, BB)",
+                subtitle: (count) => `Wykres słupkowy pokazuje, w ilu aktywnych BaseX w danym dniu data prowadzi do Liczby Mistrzowskiej (sumy składającej się z identycznych, powtarzających się cyfr po przeliczeniu na system BaseX).`
+            }
+        };
+
+        // Zmienne globalne
+        const MIN_BASE = 2;
+        const MAX_BASE = 40;
+        const ALL_BASES = Array.from({ length: MAX_BASE - MIN_BASE + 1 }, (_, i) => i + MIN_BASE);
+        let activeBases = [...ALL_BASES];
+        let allResults = {};
+        let dailyCorrelationData = {};
+        let dateLabels = [];
+
+        let chartInstanceMain = null;
+        let chartInstanceMagic = null;
+        let chartInstanceCorrelation = null;
+        let chartInstanceNonCorrelation = null;
+
+        // Słowniki do mapowania kolorów
+        const baseColorMap = {};
+        const magicSumColorMap = {};
+
+        // --- FUNKCJE OBSŁUGI MODALI ---
+
+        function openSettingsModal() {
+            document.getElementById('settings-modal').style.display = 'block';
+            if (document.getElementById('base-settings').children.length === 0) {
+                populateBaseSettings();
+            }
+            updateSettingsState();
+        }
+
+        function closeSettingsModal() {
+            document.getElementById('settings-modal').style.display = 'none';
+        }
+
+        // NOWE FUNKCJE DLA MODALA WYJAŚNIENIA
+        function openExplanationModal() {
+            document.getElementById('explanation-modal').style.display = 'block';
+        }
+
+        function closeExplanationModal() {
+            document.getElementById('explanation-modal').style.display = 'none';
+        }
+        // KONIEC NOWYCH FUNKCJI
+
+        function closeDetailsModal() {
+            document.getElementById('details-modal').style.display = 'none';
+        }
+
+        // Zamykanie modali po kliknięciu poza ich obszarem
+        window.onclick = function (event) {
+            if (event.target == document.getElementById('settings-modal')) {
+                closeSettingsModal();
+            } else if (event.target == document.getElementById('details-modal')) {
+                closeDetailsModal();
+            } else if (event.target == document.getElementById('explanation-modal')) {
+                closeExplanationModal();
+            }
+        }
+
+
+        // --- FUNKCJE GENEROWANIA KOLORÓW (BEZ ZMIAN) ---
+
+        function getBaseColor(base) {
+            if (baseColorMap[base]) return baseColorMap[base];
+            const index = base - MIN_BASE;
+            const hue = (index * 137.5) % 360;
+            const saturation = 65;
+            const lightness = 45;
+            const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+            baseColorMap[base] = color;
+            return color;
+        }
+
+        function getContrastingColor(index) {
+            const hueStep = 26;
+            const hue = (index * hueStep) % 360;
+            const saturation = 70;
+            const lightness = 50;
+            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        }
+
+        function getColorForMagicSum(sumStr) {
+            if (magicSumColorMap[sumStr]) {
+                return magicSumColorMap[sumStr];
+            }
+            const newIndex = Object.keys(magicSumColorMap).length;
+            const newColor = getContrastingColor(newIndex);
+            magicSumColorMap[sumStr] = newColor;
+            return newColor;
+        }
+
+        // --- Logika Numerologiczna i Analiza (Poprawki dla Base > 36) (BEZ ZMIAN) ---
+
+        // Zestaw symboli dla baz 2-40 (0-9, A-Z, @, #, $, £)
+        const CUSTOM_DIGITS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$£';
+
+        function toBaseStr(num, base) {
+            if (base < 2 || base > MAX_BASE) {
+                throw new Error(`Baza ${base} jest poza wspieranym zakresem (2-${MAX_BASE}).`);
+            }
+
+            if (base <= 36) {
+                return num.toString(base).toUpperCase();
+            }
+
+            let result = '';
+            let n = num;
+
+            if (n === 0) return '0';
+
+            while (n > 0) {
+                result = CUSTOM_DIGITS[n % base] + result;
+                n = Math.floor(n / base);
+            }
+            return result;
+        }
+
+        function sumDigitsBase(str, base) {
+            if (base < 2 || base > MAX_BASE) return 0;
+
+            let sum = 0;
+
+            for (const char of str) {
+                const val = CUSTOM_DIGITS.indexOf(char);
+                if (val === -1) {
+                    sum += parseInt(char, base) || 0;
+                } else {
+                    sum += val;
+                }
+            }
+            return sum;
+        }
+
+        function isMagicNumber(str) {
+            return str.length > 1 && new RegExp(`^([${CUSTOM_DIGITS.slice(0, 40)}])\\1+$`).test(str);
+        }
+
+        function getDatesInRange(start, end) {
+            let dates = [];
+            let d = new Date(start + 'T00:00:00');
+            let endDate = new Date(end + 'T00:00:00');
+            while (d <= endDate) {
+                dates.push(d.toISOString().slice(0, 10));
+                d.setDate(d.getDate() + 1);
+            }
+            return dates;
+        }
+
+        function analyzeDates(dateFrom, dateTo) {
+            dateLabels = getDatesInRange(dateFrom, dateTo);
+            let results = {};
+            dailyCorrelationData = {};
+
+            for (let base of activeBases) {
+                let baseResults = [];
+                for (let dateStr of dateLabels) {
+                    let d = new Date(dateStr + 'T00:00:00');
+                    let year = d.getFullYear();
+                    let month = d.getMonth() + 1;
+                    let day = d.getDate();
+
+                    let dayStr = toBaseStr(day, base);
+                    let monthStr = toBaseStr(month, base);
+                    let yearStr = toBaseStr(year, base);
+
+                    let baseDate = `${dayStr.padStart(2, '0')}.${monthStr.padStart(2, '0')}.${yearStr.padStart(4, '0')}`;
+                    let fullDateStr = dayStr.padStart(2, '0') + monthStr.padStart(2, '0') + yearStr.padStart(4, '0');
+
+                    let sumBase10 = sumDigitsBase(fullDateStr, base);
+                    let sumStr = toBaseStr(sumBase10, base);
+                    let magic = isMagicNumber(sumStr);
+
+                    if (!dailyCorrelationData[dateStr]) {
+                        dailyCorrelationData[dateStr] = {
+                            sumCounts: {},
+                            magicSums: {},
+                            uniqueSums: new Set(),
+                            nonCorrelatingCount: 0,
+                            nonCorrelatingBases: []
+                        };
+                    }
+
+                    // Korelacja
+                    if (!dailyCorrelationData[dateStr].sumCounts[sumBase10]) {
+                        dailyCorrelationData[dateStr].sumCounts[sumBase10] = [];
+                    }
+                    dailyCorrelationData[dateStr].sumCounts[sumBase10].push(base);
+
+                    // Mistrzowskie
+                    if (magic) {
+                        if (!dailyCorrelationData[dateStr].magicSums[sumStr]) {
+                            dailyCorrelationData[dateStr].magicSums[sumStr] = {};
+                        }
+                        dailyCorrelationData[dateStr].magicSums[sumStr][base] = 1;
+                    }
+
+                    baseResults.push({
+                        date: dateStr,
+                        baseDate,
+                        fullDateStr,
+                        sumBase10,
+                        sumStr,
+                        magic
+                    });
+                }
+                results[base] = baseResults;
+            }
+
+            // Obliczanie niekorelacji
+            dateLabels.forEach(dateStr => {
+                const counts = dailyCorrelationData[dateStr].sumCounts;
+                const nonCorrelatingBases = [];
+
+                // Zlicz bazy, które dały sumę unikalną (liczność = 1) w kontekście aktywnych baz.
+                Object.entries(counts).forEach(([sum, bases]) => {
+                    const activeBasesForSum = bases.filter(b => activeBases.includes(b));
+                    if (activeBasesForSum.length === 1) {
+                        nonCorrelatingBases.push(activeBasesForSum[0]);
+                    }
+                });
+
+                dailyCorrelationData[dateStr].nonCorrelatingCount = nonCorrelatingBases.length;
+                dailyCorrelationData[dateStr].nonCorrelatingBases = nonCorrelatingBases.sort((a, b) => a - b);
+            });
+
+            allResults = results;
+            return { results, dateLabels, dailyCorrelationData };
+        }
+
+        function updateSubtitles() {
+            const activeCount = activeBases.length;
+            const baseRange = activeBases.length > 0 ? `${activeBases[0]} do ${activeBases[activeBases.length - 1]}` : 'brak';
+
+            // Ustawienie human-friendly tytułów i podtytułów
+            document.getElementById('main-chart-title').textContent = CHART_DESCRIPTIONS.main.title;
+            document.getElementById('main-chart-subtitle').textContent = CHART_DESCRIPTIONS.main.subtitle(activeCount, baseRange);
+
+            document.getElementById('correlation-chart-title').textContent = CHART_DESCRIPTIONS.correlation.title;
+            document.getElementById('correlation-chart-subtitle').textContent = CHART_DESCRIPTIONS.correlation.subtitle(activeCount);
+
+            document.getElementById('non-correlation-chart-title').textContent = CHART_DESCRIPTIONS.nonCorrelation.title;
+            document.getElementById('non-correlation-chart-subtitle').textContent = CHART_DESCRIPTIONS.nonCorrelation.subtitle(activeCount);
+
+            document.getElementById('magic-chart-title').textContent = CHART_DESCRIPTIONS.magic.title;
+            document.getElementById('magic-chart-subtitle').textContent = CHART_DESCRIPTIONS.magic.subtitle(activeCount);
+        }
+
+        function runAnalysis() {
+            let dateFrom = document.getElementById('dateFrom').value;
+            let dateTo = document.getElementById('dateTo').value;
+
+            if (activeBases.length === 0) {
+                alert("Wybierz BaseX w Ustawieniach (2-40) przed uruchomieniem analizy.");
+                return;
+            }
+
+            updateSubtitles(); // Aktualizuj opisy
+            Object.keys(magicSumColorMap).forEach(key => delete magicSumColorMap[key]);
+
+            const { results, dateLabels, dailyCorrelationData } = analyzeDates(dateFrom, dateTo);
+            drawMainChart(results, dateLabels);
+            drawCorrelationChart(dateLabels, dailyCorrelationData);
+            drawNonCorrelationChart(dateLabels, dailyCorrelationData);
+            drawMagicChart(results, dateLabels, dailyCorrelationData);
+        }
+
+        // --- FUNKCJE DLA USTAWIENIA BASEX (BEZ ZMIAN) ---
+
+        function populateBaseSettings() {
+            const container = document.getElementById('base-settings');
+            container.innerHTML = '';
+            for (let i = MIN_BASE; i <= MAX_BASE; i++) {
+                const label = document.createElement('label');
+                label.innerHTML = `<input type="checkbox" data-base="${i}" ${activeBases.includes(i) ? 'checked' : ''}> Base ${i}`;
+                container.appendChild(label);
+            }
+        }
+
+        function updateSettingsState() {
+            const checkboxes = document.querySelectorAll('#base-settings input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                const base = parseInt(checkbox.dataset.base);
+                checkbox.checked = activeBases.includes(base);
+            });
+        }
+
+        function toggleAllBases(check) {
+            const checkboxes = document.querySelectorAll('#base-settings input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = check;
+            });
+        }
+
+        function applySettings() {
+            const checkboxes = document.querySelectorAll('#base-settings input[type="checkbox"]');
+            activeBases = [];
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    activeBases.push(parseInt(checkbox.dataset.base));
+                }
+            });
+            activeBases.sort((a, b) => a - b);
+            closeSettingsModal();
+            runAnalysis();
+        }
+
+
+        // --- WYKRESY (BEZ ZMIAN W FUNKCJACH) ---
+
+        // Poniższe funkcje (drawMainChart, getCorrelationDetails, drawCorrelationChart,
+        // getNonCorrelationDetails, drawNonCorrelationChart, getMagicDetails, drawMagicChart,
+        // handleChartClick, openDetailsModal, populateDetailsTable, getDetailsForDate)
+        // pozostają bez zmian w logice, więc pomijam je dla zwięzłości,
+        // zakładając, że stanowią drugą połowę Twojego pierwotnego kodu JS.
+
+        // Przykładowe funkcje do zasygnalizowania kontynuacji
+
+        function drawMainChart(results, labels) {
+            let ctx = document.getElementById('mainChart').getContext('2d');
+            let datasets = [];
+
+            activeBases.forEach((base) => {
+                let data = results[base].map(r => r.sumBase10);
+                let pointRadius = results[base].map(r => r.magic ? 6 : 3);
+                let pointBorderWidth = results[base].map(r => r.magic ? 2 : 0);
+                let color = getBaseColor(base);
+
+                datasets.push({
+                    label: `Base ${base}`,
+                    data: data,
+                    borderColor: color,
+                    backgroundColor: color,
+                    pointRadius: pointRadius,
+                    pointHoverRadius: 8,
+                    pointBackgroundColor: color,
+                    pointBorderColor: '#000',
+                    pointBorderWidth: pointBorderWidth,
+                    showLine: true,
+                    fill: false,
+                    tension: 0.1,
+                    hidden: false
+                });
+            });
+
+            if (chartInstanceMain) chartInstanceMain.destroy();
+
+            chartInstanceMain = new Chart(ctx, {
+                type: 'line',
+                data: { labels, datasets },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top' },
+                        title: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                title: function (context) { return `Data: ${context[0].label}`; },
+                                label: function (context) {
+                                    let base = parseInt(context.dataset.label.replace('Base ', ''));
+                                    let idx = context.dataIndex;
+                                    let meta = allResults[base]?.[idx];
+                                    if (!meta) return '';
+
+                                    return [
+                                        `Base ${base} (Suma Base10): ${meta.sumBase10}`,
+                                        `Suma Base${base}: ${meta.sumStr}`,
+                                        meta.magic ? 'Liczba Mistrzowska! 🎉' : ''
+                                    ].filter(Boolean);
+                                },
+                                afterLabel: function (context) {
+                                    let base = parseInt(context.dataset.label.replace('Base ', ''));
+                                    let idx = context.dataIndex;
+                                    let meta = allResults[base]?.[idx];
+                                    if (!meta) return '';
+                                    return `Zapis daty Base${base}: ${meta.fullDateStr}`;
+                                }
+                            }
+                        },
+                        // Kontekst dla kliknięcia
+                        // Zapewnienie, że dane `allResults` są dostępne globalnie
+                        // w handlerze `handleChartClick`
+                    },
+                    scales: {
+                        x: { display: true, title: { display: true, text: 'Data' }, ticks: { display: false } },
+                        y: { beginAtZero: true, title: { display: true, text: 'Suma Wartości Cyfr (Base10)' } }
+                    },
+                    onClick: (e) => handleChartClick(e, labels)
+                }
+            });
+        }
+
+        // Poniżej należy wstawić pozostałe funkcje obsługujące wykresy, modale szczegółów itp.
+
+        // ... reszta kodu JS (drawCorrelationChart, drawNonCorrelationChart, drawMagicChart, handleChartClick, openDetailsModal, populateDetailsTable, getDetailsForDate)
+
+        // Zapewnienie, że analiza uruchamia się przy starcie
+        window.onload = function () {
+            // Ustawienia początkowe modala BaseX
+            populateBaseSettings();
+            updateSettingsState();
+            // Uruchomienie analizy po załadowaniu
+            runAnalysis();
+        };
+
+        // --- FUNKCJA OBLICZAJĄCA LICZBĘ MISTRZOWSKĄ W BASEX (DODATKOWO DO PEŁNEGO KODU) ---
+
+        function getMagicDetails(dateStr) {
+            const data = dailyCorrelationData[dateStr];
+            let details = [];
+
+            const magicSums = Object.entries(data.magicSums);
+
+            if (magicSums.length === 0) {
+                return ['Brak Liczb Mistrzowskich w aktywnych BaseX.'];
+            }
+
+            details.push('Liczby Mistrzowskie w aktywnych BaseX:');
+            magicSums.forEach(([sumStr, bases]) => {
+                const activeBasesList = Object.keys(bases).map(Number).filter(b => activeBases.includes(b));
+                if (activeBasesList.length > 0) {
+                    details.push(` - ${sumStr} (Base${sumStr.length * 11 === parseInt(sumStr, 10) ? '11/22' : 'X'}): w Base ${activeBasesList.join(', ')}`);
+                }
+            });
+            return details;
+        }
+
+
+        // --- FUNKCJA OBSŁUGUJĄCA KLIKNIĘCIE W WYKRES (DODATKOWO DO PEŁNEGO KODU) ---
+
+        function handleChartClick(e, labels) {
+            const points = chartInstanceMain.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
+
+            if (points.length) {
+                const firstPoint = points[0];
+                const index = firstPoint.index;
+                const date = labels[index];
+                openDetailsModal(date);
+            }
+        }
+
+        function openDetailsModal(date) {
+            document.getElementById('details-date').textContent = `Szczegóły dla: ${date}`;
+            const detailsContent = document.getElementById('details-content');
+            detailsContent.innerHTML = ''; // Wyczyść zawartość
+
+            const data = getDetailsForDate(date);
+            populateDetailsTable(detailsContent, data);
+
+            document.getElementById('details-modal').style.display = 'block';
+        }
+
+        function getDetailsForDate(date) {
+            let details = [];
+            activeBases.forEach(base => {
+                const result = allResults[base].find(r => r.date === date);
+                if (result) {
+                    details.push({
+                        base: base,
+                        sumBase10: result.sumBase10,
+                        sumBaseX: result.sumStr,
+                        baseDate: result.baseDate,
+                        fullDateStr: result.fullDateStr,
+                        magic: result.magic ? 'TAK 🎉' : 'NIE'
+                    });
+                }
+            });
+            return details;
+        }
+
+        function populateDetailsTable(container, data) {
+            const table = document.createElement('table');
+            table.className = 'details-table';
+
+            // Nagłówek
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>BaseX</th>
+                        <th>Suma Base10 (Wartość)</th>
+                        <th>Suma BaseX (Numerologiczna)</th>
+                        <th>Zapis Daty BaseX</th>
+                        <th>Liczba Mistrzowska?</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            `;
+            const tbody = table.querySelector('tbody');
+
+            data.forEach(item => {
+                const row = tbody.insertRow();
+                row.className = item.magic === 'TAK 🎉' ? 'correlated' : '';
+                row.innerHTML = `
+                    <td>Base ${item.base}</td>
+                    <td>${item.sumBase10}</td>
+                    <td>${item.sumBaseX}</td>
+                    <td>${item.fullDateStr}</td>
+                    <td>${item.magic}</td>
+                `;
+            });
+
+            container.appendChild(table);
+        }
+
+        function drawCorrelationChart(labels, dailyCorrelationData) {
+            let ctx = document.getElementById('correlationChart').getContext('2d');
+
+            const correlationData = labels.map(date => {
+                const counts = dailyCorrelationData[date].sumCounts;
+                const maxCount = Object.values(counts).length > 0 ?
+                    Math.max(...Object.values(counts).map(arr => arr.filter(b => activeBases.includes(b)).length)) : 1;
+                return maxCount > 1 ? maxCount : 0;
+            });
+
+            if (chartInstanceCorrelation) chartInstanceCorrelation.destroy();
+
+            chartInstanceCorrelation = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Max. korelacja Sumy Base10',
+                        data: correlationData,
+                        backgroundColor: correlationData.map(val => val > 0 ? '#377eb8' : '#cccccc'),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                title: function (context) { return `Data: ${context[0].label}`; },
+                                label: function (context) {
+                                    const maxCount = context.parsed.y;
+                                    let label = `Max. Powtórzeń: ${maxCount}x`;
+                                    if (maxCount === 0) {
+                                        label = 'Brak korelacji w aktywnych bazach';
+                                    }
+                                    return label;
+                                },
+                                afterBody: function (context) {
+                                    const date = context[0].label;
+                                    return getCorrelationDetails(date);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { display: true, title: { display: true, text: 'Data' } },
+                        y: {
+                            beginAtZero: true,
+                            stepSize: 1,
+                            title: { display: true, text: 'Liczba BaseX (Max)' }
+                        }
+                    },
+                    onClick: (e) => handleChartClick(e, labels)
+                }
+            });
+        }
+
+        function getCorrelationDetails(dateStr) {
+            const sumCounts = dailyCorrelationData[dateStr].sumCounts;
+            let details = [];
+
+            const correlatedSums = Object.entries(sumCounts)
+                .filter(([, bases]) => bases.filter(b => activeBases.includes(b)).length > 1)
+                .map(([sum, bases]) => ({ sum: parseInt(sum), bases }));
+
+            correlatedSums.sort((a, b) => a.sum - b.sum);
+
+            if (correlatedSums.length === 0) {
+                return ['Brak korelacji sum Base10 w aktywnych bazach.'];
+            }
+
+            details.push('Szczegóły Korelacji Sum Base10:');
+            let foundCorrelation = false;
+            correlatedSums.forEach(item => {
+                const activeCorrelatedBases = item.bases.filter(b => activeBases.includes(b));
+                if (activeCorrelatedBases.length > 1) {
+                    details.push(` - Suma ${item.sum} (Powtórzenie ${activeCorrelatedBases.length}x)`);
+                    details.push(`   w Base: ${activeCorrelatedBases.join(', ')}`);
+                    foundCorrelation = true;
+                }
+            });
+
+            if (!foundCorrelation) return ['Brak korelacji sum Base10 w aktywnych bazach.'];
+            return details;
+        }
+
+        function drawNonCorrelationChart(labels, dailyCorrelationData) {
+            let ctx = document.getElementById('nonCorrelationChart').getContext('2d');
+
+            const nonCorrelationData = labels.map(date => dailyCorrelationData[date].nonCorrelatingCount);
+
+            if (chartInstanceNonCorrelation) chartInstanceNonCorrelation.destroy();
+
+            chartInstanceNonCorrelation = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Liczba BaseX niekorelujących (dających unikalną sumę Base10)',
+                        data: nonCorrelationData,
+                        borderColor: '#e41a1c',
+                        backgroundColor: 'rgba(228, 26, 28, 0.2)',
+                        fill: true,
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                title: function (context) { return `Data: ${context[0].label}`; },
+                                label: function (context) {
+                                    const count = context.parsed.y;
+                                    return `Liczba BaseX z unikalną sumą: ${count}`;
+                                },
+                                afterBody: function (context) {
+                                    const date = context[0].label;
+                                    return getNonCorrelationDetails(date);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { display: true, title: { display: true, text: 'Data' }, ticks: { display: false } },
+                        y: {
+                            beginAtZero: true,
+                            stepSize: 1,
+                            title: { display: true, text: 'Liczba BaseX (Niekorelacja)' }
+                        }
+                    },
+                    onClick: (e) => handleChartClick(e, labels)
+                }
+            });
+        }
+
+        function getNonCorrelationDetails(dateStr) {
+            const data = dailyCorrelationData[dateStr];
+            const uniqueCount = data.nonCorrelatingCount;
+
+            if (uniqueCount === 0) return ['Brak BaseX z unikalną sumą Base10 (wszystkie korelują z inną aktywną BaseX).'];
+
+            const bases = data.nonCorrelatingBases;
+
+            return [
+                'Bazy z unikalną sumą Base10 (nie korelują z innymi aktywnymi bazami):',
+                `  ${bases.join(', ')}`
+            ];
+        }
+
+        function drawMagicChart(results, labels, dailyCorrelationData) {
+            let ctx = document.getElementById('magicChart').getContext('2d');
+            const magicCounts = labels.map(date => Object.keys(dailyCorrelationData[date].magicSums).length);
+
+            if (chartInstanceMagic) chartInstanceMagic.destroy();
+
+            chartInstanceMagic = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Liczba BaseX z Liczbą Mistrzowską',
+                        data: magicCounts,
+                        backgroundColor: magicCounts.map(val => val > 0 ? '#ff7f00' : '#cccccc'),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                title: function (context) { return `Data: ${context[0].label}`; },
+                                label: function (context) {
+                                    const count = context.parsed.y;
+                                    return `Liczba BaseX z Liczbą Mistrzowską: ${count}`;
+                                },
+                                afterBody: function (context) {
+                                    const date = context[0].label;
+                                    return getMagicDetails(date);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { display: true, title: { display: true, text: 'Data' }, ticks: { display: false } },
+                        y: {
+                            beginAtZero: true,
+                            stepSize: 1,
+                            title: { display: true, text: 'Liczba BaseX (Mistrzowskie)' }
+                        }
+                    },
+                    onClick: (e) => handleChartClick(e, labels)
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>
