@@ -6,7 +6,7 @@ import { getCorrelationDetails } from '../analyzer.js';
 
 let chartInstanceCorrelation = null;
 
-// Paleta kolorów dla różnych grup korelacji (od najciemniejszych do najjaśniejszych)
+// Paleta kolorów dla różnych grup korelacji
 const CORRELATION_COLORS = [
     '#e41a1c', // czerwony
     '#377eb8', // niebieski
@@ -64,8 +64,10 @@ export function drawCorrelationChart(labels, dailyCorrelationData, activeBases, 
             data: data,
             backgroundColor: CORRELATION_COLORS[i % CORRELATION_COLORS.length] + 'DD', // Przezroczystość
             borderColor: CORRELATION_COLORS[i % CORRELATION_COLORS.length],
-            borderWidth: 2,
-            order: maxGroups - i // Większy order = z tyłu, mniejszy = z przodu
+            borderWidth: 1,
+            barPercentage: 1.0,      // Szerokość słupka względem kategorii
+            categoryPercentage: 1.0,  // Szerokość kategorii
+            order: maxGroups - i      // Większy order = z tyłu
         });
     }
 
