@@ -4,7 +4,7 @@
 
 export const CHART_DESCRIPTIONS = {
     main: {
-        title: "Wykres Sumy Numerologicznej (Base10) dla Różnych Systemów Liczbowych od Base2 do Base40",
+        title: "Wykres Sumy Numerologicznej (Base10) dla Różnych Systemów Liczbowych od Base2 do Base16",
         subtitle: (count, range) => 
             `Pokazuje, jaką jedną liczbę (Suma Base10) otrzymujemy, sumując wszystkie cyfry daty zapisanej w różnych systemach liczbowych (BaseX). Każda linia to inny system pozycyjny. Grube punkty oznaczają Liczby Mistrzowskie.`
     },
