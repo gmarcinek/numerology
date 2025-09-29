@@ -5,7 +5,7 @@
 import { drawMainChart } from './main-chart.js';
 import { drawCorrelationChart } from './correlation-chart.js';
 import { drawMagicChart } from './magic-chart.js';
-import { CHART_DESCRIPTIONS } from '../config.js';
+import { CHART_DESCRIPTIONS } from '../../data/chart-descriptions.js';
 
 /**
  * Aktualizuje tytuły i podtytuły wykresów
