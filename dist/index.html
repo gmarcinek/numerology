@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numerologia - Analiza Korelacji, Mistrzowskich i Base2-Base40</title>
+
+    <!-- Style -->
+
+    <!-- App Entry Point -->
+  <script type="module" crossorigin src="/assets/index-D6owPAai.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-18NegIGn.css">
+</head>
+
+<body>
+    <!-- Panel Kontrolny -->
+    <div id="controls">
+        <label>Od: <input type="date" id="dateFrom" value="2025-01-01"></label>
+        <label>Do: <input type="date" id="dateTo" value="2025-12-31"></label>
+        <button onclick="openSettingsModal()">Ustawienia BaseX (2-40)</button>
+        <button onclick="openExplanationModal()">Wyjaśnienie / O Baleniu Numerologii</button>
+        <button onclick="runAnalysis()">Oblicz i Pokaż Wykresy</button>
+    </div>
+
+    <!-- Obszar Wykresów -->
+    <div id="chart-area">
+        <div id="chart-container-main" class="chart-container">
+            <div class="chart-title" id="main-chart-title"></div>
+            <div class="chart-subtitle" id="main-chart-subtitle"></div>
+            <canvas id="mainChart"></canvas>
+        </div>
+
+        <div id="chart-container-correlation" class="chart-container">
+            <div class="chart-title" id="correlation-chart-title"></div>
+            <div class="chart-subtitle" id="correlation-chart-subtitle"></div>
+            <canvas id="correlationChart"></canvas>
+        </div>
+
+        <div id="chart-container-magic" class="chart-container">
+            <div class="chart-title" id="magic-chart-title"></div>
+            <div class="chart-subtitle" id="magic-chart-subtitle"></div>
+            <canvas id="magicChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Modal Ustawień BaseX -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSettingsModal()">&times;</span>
+            <h2>Ustawienia Wykresów BaseX (2-40)</h2>
+
+            <div class="setting-controls">
+                <button onclick="toggleAllBases(true)">Wybierz Wszystkie (2-40)</button>
+                <button onclick="toggleAllBases(false)">Odznacz Wszystkie</button>
+            </div>
+
+            <div id="base-settings"></div>
+
+            <button onclick="applySettings()" style="margin-top: 20px; padding: 10px;">
+                Zastosuj i Uruchom Analizę
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal Wyjaśnienia -->
+    <div id="explanation-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeExplanationModal()">&times;</span>
+            <div id="explanation-container">
+                <h2 style="color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px;">
+                    Po co to całe zamieszanie? Systemy Liczbowe kontra Numerologia
+                </h2>
+
+                <div class="explanation-section">
+                    <h3>1. Wprowadzenie: Czym są Pozycyjne Systemy Liczbowe (BaseX)?</h3>
+                    <p>
+                        Codziennie używamy <strong>Systemu Dziesiętnego (Base 10)</strong>, który do zapisu liczb
+                        wykorzystuje dziesięć cyfr (0-9). System liczbowy to jednak tylko <strong>narzędzie
+                            zapisu</strong>, a nie uniwersalne prawo natury.
+                    </p>
+                    <p>
+                        Na świecie istnieją dziesiątki innych, równie poprawnych systemów (BaseX), na przykład:
+                    <ul>
+                        <li><strong>System Binarny (Base 2)</strong>: Używa tylko cyfr 0 i 1.</li>
+                        <li><strong>System Ósemkowy (Base 8)</strong>: Używa cyfr 0-7.</li>
+                        <li><strong>System Szesnastkowy (Base 16)</strong>: Używa cyfr 0-9 oraz liter A-F.</li>
+                    </ul>
+                    <span style="font-style: italic;">Zmiana systemu liczbowego całkowicie zmienia
+                        <strong>zapis</strong> daty (np. 29.09.1993 w Base 10 to 35.11.3711 w Base 8), ale nie zmienia
+                        jej faktycznej wartości.</span>
+                    </p>
+                </div>
+
+                <div class="explanation-section">
+                    <h3>2. Hipoteza i Logika Analizy</h3>
+                    <p>
+                        Numerologia twierdzi, że liczby uzyskane z daty (przez sumowanie jej cyfr) mają
+                        <strong>uniwersalne, magiczne znaczenie</strong> i wpływają na życie człowieka.
+                    </p>
+                    <p>
+                        <strong>Test Logiczny (Hipoteza):</strong> Jeżeli numerologia miałaby uniwersalną wartość, to
+                        jej wyniki (np. suma cyfr daty, tzw. "Liczba Życia") <strong>powinny być niezależne od tego, w
+                            jakim systemie liczbowym zapiszemy datę</strong>.
+                    </p>
+                    <p style="font-weight: bold;">
+                        Jeżeli to samo zdarzenie (ta sama data) daje różne wyniki w zależności od BaseX, oznacza to, że
+                        wynik nie jest uniwersalny.
+                    </p>
+                </div>
+
+                <div class="explanation-section">
+                    <h3>3. Co udowadniają wykresy? (Wniosek) 🛑</h3>
+                    <p>
+                        Wykresy pokazują, że test numerologii nie zdaje:
+                    <ol>
+                        <li><strong>Suma cyfr jest zależna od BaseX:</strong> Różne linie na pierwszym wykresie (np.
+                            Base 10, Base 16, Base 3) pokazują drastycznie różne wartości dla tej samej daty. Wynik
+                            numerologii zależy od systemu liczbowego!</li>
+                        <li><strong>Liczby Mistrzowskie są losowe:</strong> Częstotliwość występowania "Liczb
+                            Mistrzowskich" (np. 11, 22, AA, BB), które są kluczowe w numerologii, jest
+                            <strong>całkowicie przypadkowa</strong> i zmienia się z BaseX. Przykładowo, dla stycznia
+                            2025: w Base 10 mamy 2 Liczby Mistrzowskie, ale w Base 3 jest ich aż 8.
+                        </li>
+                    </ol>
+                    </p>
+                    <p class="conclusion" style="font-size: 1.1em; font-weight: bold;">
+                        Wniosek jest jednoznaczny: Wyniki numerologii są całkowicie zależne od przypadku i arbitralnych
+                        konwencji zapisu. To dowodzi, że numerologia nie ma żadnej uniwersalnej wartości.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Szczegółów -->
+    <div id="details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeDetailsModal()">&times;</span>
+            <h2 id="details-date">Szczegóły dla: </h2>
+            <div id="details-content"></div>
+        </div>
+    </div>
+</body>
+
+</html>
