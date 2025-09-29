@@ -14,7 +14,17 @@ let chartInstanceMain = null;
  */
 function getBaseColor(base) {
     if (baseColorMap[base]) return baseColorMap[base];
+    
     const index = base - MIN_BASE;
+    
+    // Użyj predefiniowanych kolorów, jeśli są dostępne
+    if (index < BASE_COLORS.length) {
+        const color = BASE_COLORS[index];
+        baseColorMap[base] = color;
+        return color;
+    }
+    
+    // Fallback dla baz powyżej 16
     const hue = (index * 137.5) % 360;
     const saturation = 65;
     const lightness = 45;
