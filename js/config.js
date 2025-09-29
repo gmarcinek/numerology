@@ -4,7 +4,7 @@
 
 // Zakres obsługiwanych systemów liczbowych
 export const MIN_BASE = 2;
-export const MAX_BASE = 40;
+export const MAX_BASE = 16;
 
 // Tablica wszystkich dostępnych baz
 export const ALL_BASES = Array.from(

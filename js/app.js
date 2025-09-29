@@ -2,6 +2,7 @@
    GŁÓWNA APLIKACJA - Orkiestracja i Stan
    ================================================================= */
 
+import Chart from 'chart.js/auto';
 import { ALL_BASES, magicSumColorMap } from './config.js';
 import { analyzeDates } from './analyzer.js';
 
@@ -20,6 +21,9 @@ import {
     getSelectedBases,
     setupModalCloseHandlers
 } from './modals.js';
+
+// Udostępnij Chart globalnie dla innych modułów
+window.Chart = Chart;
 
 // Stan aplikacji
 let activeBases = [...ALL_BASES];

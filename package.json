@@ -1,0 +1,18 @@
+{
+  "name": "numerology",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "chart.js": "^4.5.0",
+    "vite": "^6.3.6"
+  }
+}
