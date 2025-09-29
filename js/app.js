@@ -9,7 +9,7 @@ import {
     drawMainChart, 
     drawCorrelationChart, 
     drawMagicChart 
-} from './charts.js';
+} from './charts/index.js';
 import { 
     openSettingsModal, 
     closeSettingsModal, 
