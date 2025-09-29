@@ -4,12 +4,11 @@
 
 import { ALL_BASES, magicSumColorMap } from './config.js';
 import { analyzeDates } from './analyzer.js';
-import { 
-    updateSubtitles, 
-    drawMainChart, 
-    drawCorrelationChart, 
-    drawMagicChart 
-} from './charts/index.js';
+
+import { drawCorrelationChart } from '../charts/correlation-chart.js';
+import { drawMainChart } from '../charts/main-chart.js';
+import { drawMagicChart } from '../charts/magic-chart.js';
+import { updateSubtitles } from '../charts/index.js';
 import { 
     openSettingsModal, 
     closeSettingsModal, 
