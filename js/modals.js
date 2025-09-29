@@ -38,14 +38,22 @@ export function closeExplanationModal() {
 }
 
 /**
- * Zamyka modal szczegółów
+ * Zamyka drawer szczegółów
  */
 export function closeDetailsModal() {
-    document.getElementById('details-modal').style.display = 'none';
+    const backdrop = document.getElementById('details-backdrop');
+    const drawer = document.getElementById('details-drawer');
+    
+    backdrop.classList.remove('open');
+    drawer.classList.remove('open');
+    
+    setTimeout(() => {
+        backdrop.style.display = 'none';
+    }, 300);
 }
 
 /**
- * Otwiera modal szczegółów dla konkretnej daty
+ * Otwiera drawer szczegółów dla konkretnej daty
  * @param {string} date - Data (YYYY-MM-DD)
  * @param {Object} allResults - Wszystkie wyniki analizy
  * @param {Array<number>} activeBases - Aktywne bazy
@@ -58,7 +66,15 @@ export function openDetailsModal(date, allResults, activeBases) {
     const data = getDetailsForDate(date, allResults, activeBases);
     populateDetailsTable(detailsContent, data);
 
-    document.getElementById('details-modal').style.display = 'block';
+    const backdrop = document.getElementById('details-backdrop');
+    const drawer = document.getElementById('details-drawer');
+    
+    backdrop.style.display = 'block';
+    
+    requestAnimationFrame(() => {
+        backdrop.classList.add('open');
+        drawer.classList.add('open');
+    });
 }
 
 /**
@@ -182,10 +198,10 @@ export function setupModalCloseHandlers() {
     window.onclick = function (event) {
         if (event.target == document.getElementById('settings-modal')) {
             closeSettingsModal();
-        } else if (event.target == document.getElementById('details-modal')) {
-            closeDetailsModal();
         } else if (event.target == document.getElementById('explanation-modal')) {
             closeExplanationModal();
+        } else if (event.target == document.getElementById('details-backdrop')) {
+            closeDetailsModal();
         }
     }
 }

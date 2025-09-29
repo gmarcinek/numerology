@@ -158,8 +158,64 @@ body {
 }
 
 /* =================================================================
-   MODAL SZCZEGÓŁÓW - TABELA
+   DRAWER SZCZEGÓŁÓW
    ================================================================= */
+
+#details-backdrop {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+#details-backdrop.open {
+    opacity: 1;
+}
+
+#details-drawer {
+    position: fixed;
+    z-index: 1000;
+    right: 0;
+    top: 0;
+    width: 50%;
+    height: 100vh;
+    background-color: #fefefe;
+    box-shadow: -4px 0 12px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+    transition: transform 0.3s ease-out;
+    transform: translateX(100%);
+    padding: 32px;
+}
+
+#details-drawer.open {
+    transform: translateX(0);
+}
+
+#details-drawer .drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eee;
+}
+
+#details-drawer .drawer-header h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+}
+
+#details-drawer .close {
+    float: none;
+    margin: 0;
+}
 
 .details-table {
     width: 100%;
@@ -225,5 +281,9 @@ body {
     .modal-content {
         width: 95%;
         margin-top: 10%;
+    }
+
+    #details-drawer {
+        width: 100%;
     }
 }

@@ -133,13 +133,14 @@
         </div>
     </div>
 
-    <!-- Modal Szczegółów -->
-    <div id="details-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeDetailsModal()">&times;</span>
+    <!-- Drawer Szczegółów -->
+    <div id="details-backdrop"></div>
+    <div id="details-drawer">
+        <div class="drawer-header">
             <h2 id="details-date">Szczegóły dla: </h2>
-            <div id="details-content"></div>
+            <span class="close" onclick="closeDetailsModal()">&times;</span>
         </div>
+        <div id="details-content"></div>
     </div>
 </body>
 
