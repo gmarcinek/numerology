@@ -8,7 +8,6 @@ import {
     updateSubtitles, 
     drawMainChart, 
     drawCorrelationChart, 
-    drawNonCorrelationChart, 
     drawMagicChart 
 } from './charts.js';
 import { 
@@ -28,6 +27,20 @@ let activeBases = [...ALL_BASES];
 let allResults = {};
 let dailyCorrelationData = {};
 let dateLabels = [];
+
+/**
+ * Ustawia domyślne daty (aktualny rok)
+ */
+function setDefaultDates() {
+    const now = new Date();
+    const year = now.getFullYear();
+    
+    const startDate = `${year}-01-01`;
+    const endDate = `${year}-12-31`;
+    
+    document.getElementById('dateFrom').value = startDate;
+    document.getElementById('dateTo').value = endDate;
+}
 
 /**
  * Uruchamia analizę i rysuje wszystkie wykresy
@@ -53,7 +66,6 @@ function runAnalysis() {
 
     drawMainChart(allResults, dateLabels, activeBases, handleChartClick);
     drawCorrelationChart(dateLabels, dailyCorrelationData, activeBases, handleChartClick);
-    drawNonCorrelationChart(dateLabels, dailyCorrelationData, activeBases, handleChartClick);
     drawMagicChart(allResults, dateLabels, dailyCorrelationData, activeBases, handleChartClick);
 }
 
@@ -101,6 +113,7 @@ function exportToWindow() {
  * Inicjalizacja aplikacji
  */
 function init() {
+    setDefaultDates();
     exportToWindow();
     setupModalCloseHandlers();
     runAnalysis();
