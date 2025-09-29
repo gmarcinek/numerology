@@ -3,8 +3,26 @@
    ================================================================= */
 
 import { getCorrelationDetails } from '../analyzer.js';
+import { baseColorMap } from '../config.js';
 
 let chartInstanceCorrelation = null;
+
+/**
+ * Generuje kolor HSL dla systemu BaseX
+ * @param {number} base - Numer bazy
+ * @returns {string} - Kolor w formacie HSL
+ */
+function getBaseColor(base) {
+    if (baseColorMap[base]) return baseColorMap[base];
+    const MIN_BASE = 2;
+    const index = base - MIN_BASE;
+    const hue = (index * 137.5) % 360;
+    const saturation = 65;
+    const lightness = 45;
+    const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    baseColorMap[base] = color;
+    return color;
+}
 
 /**
  * Rysuje wykres korelacji - ile BaseX uczestniczy w powtórzeniach sum
@@ -17,19 +35,29 @@ export function drawCorrelationChart(labels, dailyCorrelationData, activeBases, 
     let ctx = document.getElementById('correlationChart').getContext('2d');
     const maxBases = activeBases.length;
 
-    // Ile BaseX uczestniczy w korelacji (ma sumę powtórzoną z inną BaseX)
-    const correlatingData = labels.map(date => {
-        const counts = dailyCorrelationData[date].sumCounts;
-        let correlatingBases = new Set();
-        
-        Object.entries(counts).forEach(([sum, bases]) => {
-            const activeBasesForSum = bases.filter(b => activeBases.includes(b));
-            if (activeBasesForSum.length > 1) {
-                activeBasesForSum.forEach(b => correlatingBases.add(b));
-            }
+    // Dla każdej BaseX tworzymy osobny dataset (stacked bar)
+    const datasets = activeBases.map(base => {
+        const data = labels.map(date => {
+            const counts = dailyCorrelationData[date].sumCounts;
+            let isCorrelating = false;
+            
+            Object.entries(counts).forEach(([sum, bases]) => {
+                const activeBasesForSum = bases.filter(b => activeBases.includes(b));
+                if (activeBasesForSum.length > 1 && activeBasesForSum.includes(base)) {
+                    isCorrelating = true;
+                }
+            });
+            
+            return isCorrelating ? 1 : 0;
         });
-        
-        return correlatingBases.size;
+
+        return {
+            label: `Base ${base}`,
+            data: data,
+            backgroundColor: getBaseColor(base),
+            borderWidth: 0,
+            stack: 'stack1'
+        };
     });
 
     if (chartInstanceCorrelation) chartInstanceCorrelation.destroy();
@@ -38,31 +66,31 @@ export function drawCorrelationChart(labels, dailyCorrelationData, activeBases, 
         type: 'bar',
         data: {
             labels: labels,
-            datasets: [{
-                label: 'Liczba BaseX korelujących',
-                data: correlatingData,
-                backgroundColor: '#377eb8',
-                borderWidth: 1
-            }]
+            datasets: datasets
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { display: false },
+                legend: { 
+                    display: true,
+                    position: 'top'
+                },
                 title: { display: false },
                 tooltip: {
+                    mode: 'index',
                     callbacks: {
                         title: function (context) { 
                             return `Data: ${context[0].label}`; 
                         },
                         label: function (context) {
-                            const value = context.parsed.y;
-                            return `BaseX korelujących: ${value} / ${maxBases}`;
+                            return context.dataset.label;
                         },
-                        afterBody: function (context) {
+                        footer: function(context) {
                             const date = context[0].label;
-                            return getCorrelationDetails(date, dailyCorrelationData, activeBases);
+                            const total = context.reduce((sum, item) => sum + item.parsed.y, 0);
+                            const details = getCorrelationDetails(date, dailyCorrelationData, activeBases);
+                            return [`\nRazem korelujących: ${total} / ${maxBases}`, '', ...details];
                         }
                     }
                 }
@@ -71,13 +99,15 @@ export function drawCorrelationChart(labels, dailyCorrelationData, activeBases, 
                 x: { 
                     display: true, 
                     title: { display: true, text: 'Data' },
-                    ticks: { display: false }
+                    ticks: { display: false },
+                    stacked: true
                 },
                 y: {
                     beginAtZero: true,
                     max: maxBases,
                     stepSize: 1,
-                    title: { display: true, text: `Liczba BaseX korelujących (max: ${maxBases})` }
+                    title: { display: true, text: `Liczba BaseX korelujących (max: ${maxBases})` },
+                    stacked: true
                 }
             },
             onClick: (e) => onClickCallback(e, chartInstanceCorrelation, labels)
