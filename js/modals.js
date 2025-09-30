@@ -132,7 +132,7 @@ function populateDetailsTable(container, data) {
             <td>Base ${item.base}</td>
             <td>${item.sumBase10}</td>
             <td>${item.sumBaseX}</td>
-            <td>${item.fullDateStr}</td>
+            <td>${item.baseDate}</td>
             <td>${item.magic}</td>
         `;
     });
