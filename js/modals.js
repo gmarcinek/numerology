@@ -103,8 +103,8 @@ function populateDetailsTable(container, data) {
             <tr>
                 <th>System Pozycyjny</th>
                 <th>Zapis Daty</th>
-                <th>Suma</th>
-                <th>Normalizowana</th>
+                <th>BaseX</th>
+                <th>Normal</th>
                 ${!isMobile ? '<th>Mistrzowska?</th>' : ""}
             </tr>
         </thead>
@@ -117,9 +117,9 @@ function populateDetailsTable(container, data) {
         row.className = item.magic === 'TAK 🎉' ? 'correlated' : '';
         row.innerHTML = `
             <td>Base ${item.base}</td>
-            <td>${item.baseDate}</td>
-            <td>${item.sumBaseX}</td>
-            <td>${item.sumBase10}</td>
+            <td>${item.baseDate}<sub>${item.base}</sub></td>
+            <td>${item.sumBaseX}<sub>${item.base}</sub></td>
+            <td>${item.sumBase10}<sub>10</sub></td>
             ${!isMobile ? `<td>${item.magic}</td>` : ""}
             
         `;
