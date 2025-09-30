@@ -29,14 +29,15 @@
     <div id="controls">
         <input type="date" id="dateFrom" value="2025-01-01" placeholder="Od">
         <input type="date" id="dateTo" value="2025-12-31" placeholder="Do">
-        <button onclick="openSettingsModal()" style="background-color: #67a300;">Ustawienia BaseX (2-40)</button>
-        <button onclick="runAnalysis()" style="background-color: #ff7b00;">Oblicz i Pokaż Wykresy</button>
+        <button onclick="runAnalysis()" style="background-color: #286800;">Zatwierdź Daty</button>
+        <button onclick="openSettingsModal()" style="background-color: #556b47;">Ustawienia Wykresów</button>
         |
-        <button onclick="openExplanationModal()" style="background-color: #404040;">Wyjaśnienie / O Obalaniu
-            Numerologii</button>
-        <button style="background-color: #fce23b; color: #eee;"><a
-                href="https://www.instagram.com/gmarcinek.photo/">Kontakt</a></button>
+        <button onclick="openExplanationDrawer()" style="background-color: #404040;">Wyjaśnienie Numerologii</button>
+        <button style="background-color: #404040;" class="btn-link">
+            <a href="https://www.instagram.com/gmarcinek.photo/" target="_blank">Kontakt</a>
+        </button>
     </div>
+
 
     <div class="audio-container" id="player">
         <audio src="./assets/audio.mp4"></audio>
@@ -71,7 +72,7 @@
                 <li><strong>Różnice skali:</strong> w niskich bazach (Base2–Base6) wartości utrzymują się
                     na poziomie ok. 5–20, natomiast w wyższych (Base13–Base16) sięgają powyżej 50.</li>
                 <li><strong>Zróżnicowane rytmy:</strong> przebiegi nie są równoległe – każdy system liczbowy
-                    tworzy własny wzór, własną „melodię” zmian.</li>
+                    tworzy własny wzór, własną „melodię" zmian.</li>
                 <li><strong>Liczby Mistrzowskie:</strong> zaznaczone punkty pojawiają się w różnych bazach,
                     ale nie synchronicznie i bez stałego rytmu.</li>
             </ul>
@@ -80,7 +81,7 @@
                 <strong>Wniosek:</strong> suma numerologiczna nie jest uniwersalną wartością,
                 lecz funkcją wybranego systemu liczbowego. Każda baza wytwarza własny rytm
                 i własne punkty szczególne, które z perspektywy numerologii
-                wyglądają równie „naturalnie”.
+                wyglądają równie „naturalnie".
             </p>
         </div>
 
@@ -96,7 +97,7 @@
             <p>
                 Wykres przedstawia, ile z 15 aktywnych systemów liczbowych (Base2–Base16)
                 daje w danym dniu identyczną sumę numerologiczną jak system dziesiętny (Base10).
-                Kolorowe słupki pokazują systemy, które „trafiły” w wynik Base10,
+                Kolorowe słupki pokazują systemy, które „trafiły" w wynik Base10,
                 natomiast szary pas oznacza brak korelacji.
             </p>
 
@@ -109,7 +110,7 @@
             </ul>
 
             <p>
-                Innymi słowy: <em>system dziesiętny nie jest bardziej „prawdziwy” niż inne –
+                Innymi słowy: <em>system dziesiętny nie jest bardziej „prawdziwy" niż inne –
                     po prostu został przyjęty przez ludzi jako punkt odniesienia.</em>
             </p>
         </div>
@@ -133,7 +134,7 @@
                     korelacji.</li>
                 <li>Sporadycznie zdarza się, że 2–4 systemy dają ten sam wynik co Base10.</li>
                 <li><strong>Wniosek:</strong> korelacja z Base10 jest wyjątkiem, a nie regułą. System dziesiętny
-                    nie ma matematycznej przewagi – jego „prawdziwość” jest kulturowa, nie uniwersalna.</li>
+                    nie ma matematycznej przewagi – jego „prawdziwość" jest kulturowa, nie uniwersalna.</li>
             </ul>
 
             <h3>2. Korelacja sum numerologicznych między systemami</h3>
@@ -142,7 +143,7 @@
                 niezależnie od Base10. Kolory oznaczają konkretne wartości sum (np. 7, 11, 21, 33).
             </p>
             <ul>
-                <li>Korelacje są częste i rozproszone – występują na wielu różnych sumach, nie tylko „magicznych”.</li>
+                <li>Korelacje są częste i rozproszone – występują na wielu różnych sumach, nie tylko „magicznych".</li>
                 <li>Zdarzają się dni, gdy nawet 8–10 systemów naraz daje identyczny wynik.</li>
                 <li><strong>Wniosek:</strong> systemy liczbowo-symboliczne często tworzą chwilowe sojusze,
                     ale są one chaotyczne i nietrwałe. To potwierdza, że numerologia bazuje na
@@ -152,15 +153,15 @@
 
             <h3>3. Porównanie obu wykresów</h3>
             <ul>
-                <li><strong>Wykres 1:</strong> Base10 rzadko ma „sojuszników”, jest raczej samotny.</li>
+                <li><strong>Wykres 1:</strong> Base10 rzadko ma „sojuszników", jest raczej samotny.</li>
                 <li><strong>Wykres 2:</strong> między różnymi bazami pojawia się sporo korelacji,
-                    które jednak nie koncentrują się wokół jednej „prawdziwej” wartości.</li>
+                    które jednak nie koncentrują się wokół jednej „prawdziwej" wartości.</li>
             </ul>
 
             <p>
                 Podsumowując: <strong>Base10 nie jest wyjątkowe</strong>, a numerologia w różnych bazach
                 generuje liczne, ale przypadkowe punkty wspólne. To pokazuje arbitralność systemów liczbowych
-                i brak jednej „uprzywilejowanej” formy prawdy.
+                i brak jednej „uprzywilejowanej" formy prawdy.
             </p>
         </div>
 
@@ -184,7 +185,7 @@
                     dniu przynajmniej jedna baza daje liczbę mistrzowską.</li>
                 <li><strong>Epizodyczne skoki:</strong> Okazyjnie pojawiają się dni z wartością <strong>2–3</strong>
                     (rzadko <strong>4</strong>) — kilka baz jednocześnie tworzy liczbę mistrzowską.</li>
-                <li><strong>Brak długich „pustyń”:</strong> Zdarzenia są rozproszone dość równomiernie w czasie; dłuższe
+                <li><strong>Brak długich „pustyń":</strong> Zdarzenia są rozproszone dość równomiernie w czasie; dłuższe
                     ciągi bez żadnego trafienia występują rzadko.</li>
             </ul>
 
@@ -193,7 +194,7 @@
                 na wiele baz.
                 Ich obecność to efekt kombinatoryki zapisu i sumowania w różnych systemach liczbowych — wzorzec zależy
                 od przyjętej bazy,
-                a nie od specjalnego „przywileju” danej daty.
+                a nie od specjalnego „przywileju" danej daty.
             </p>
         </div>
 
@@ -219,82 +220,82 @@
         </div>
     </div>
 
-    <!-- Modal Wyjaśnienia -->
-    <div id="explanation-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeExplanationModal()">&times;</span>
-            <div id="explanation-container">
-                <h2 style="color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px;">
-                    Po co to całe zamieszanie? Systemy Liczbowe kontra Numerologia
-                </h2>
+    <!-- Drawer Wyjaśnienia -->
+    <div id="explanation-backdrop"></div>
+    <div id="explanation-drawer">
+        <div class="drawer-header">
+            <h2>Po co to całe zamieszanie?</h2>
+            <span class="close" onclick="closeExplanationDrawer()">&times;</span>
+        </div>
+        <div class="drawer-content">
+            <div class="explanation-section">
+                <h3>1. Wprowadzenie: Czym są Pozycyjne Systemy Liczbowe (BaseX)?</h3>
+                <p>
+                    Codziennie używamy <strong>Systemu Dziesiętnego (Base 10)</strong>, który do zapisu liczb
+                    wykorzystuje dziesięć cyfr (0-9). System liczbowy to jednak tylko <strong>narzędzie
+                        zapisu</strong>, a nie uniwersalne prawo natury.
+                </p>
+                <p>
+                    Na świecie istnieją dziesiątki innych, równie poprawnych systemów (BaseX), na przykład:
+                </p>
+                <ul>
+                    <li><strong>System Binarny (Base 2)</strong>: Używa tylko cyfr 0 i 1.</li>
+                    <li><strong>System Ósemkowy (Base 8)</strong>: Używa cyfr 0-7.</li>
+                    <li><strong>System Szesnastkowy (Base 16)</strong>: Używa cyfr 0-9 oraz liter A-F.</li>
+                </ul>
+                <p class="highlight">
+                    Zmiana systemu liczbowego całkowicie zmienia <strong>zapis</strong> daty
+                    (np. 29.09.1993 w Base 10 to 35.11.3711 w Base 8), ale nie zmienia jej faktycznej wartości.
+                </p>
+            </div>
 
-                <div class="explanation-section">
-                    <h3>1. Wprowadzenie: Czym są Pozycyjne Systemy Liczbowe (BaseX)?</h3>
-                    <p>
-                        Codziennie używamy <strong>Systemu Dziesiętnego (Base 10)</strong>, który do zapisu liczb
-                        wykorzystuje dziesięć cyfr (0-9). System liczbowy to jednak tylko <strong>narzędzie
-                            zapisu</strong>, a nie uniwersalne prawo natury.
-                    </p>
-                    <p>
-                        Na świecie istnieją dziesiątki innych, równie poprawnych systemów (BaseX), na przykład:
-                    <ul>
-                        <li><strong>System Binarny (Base 2)</strong>: Używa tylko cyfr 0 i 1.</li>
-                        <li><strong>System Ósemkowy (Base 8)</strong>: Używa cyfr 0-7.</li>
-                        <li><strong>System Szesnastkowy (Base 16)</strong>: Używa cyfr 0-9 oraz liter A-F.</li>
-                    </ul>
-                    <span style="font-style: italic;">Zmiana systemu liczbowego całkowicie zmienia
-                        <strong>zapis</strong> daty (np. 29.09.1993 w Base 10 to 35.11.3711 w Base 8), ale nie zmienia
-                        jej faktycznej wartości.</span>
-                    </p>
-                </div>
+            <div class="explanation-section">
+                <h3>2. Hipoteza i Logika Analizy</h3>
+                <p>
+                    Numerologia twierdzi, że liczby uzyskane z daty (przez sumowanie jej cyfr) mają
+                    <strong>uniwersalne, magiczne znaczenie</strong> i wpływają na życie człowieka.
+                </p>
+                <p>
+                    <strong>Test Logiczny (Hipoteza):</strong> Jeżeli numerologia miałaby uniwersalną wartość, to
+                    jej wyniki (np. suma cyfr daty, tzw. "Liczba Życia") <strong>powinny być niezależne od tego, w
+                        jakim systemie liczbowym zapiszemy datę</strong>.
+                </p>
+                <p class="emphasis">
+                    Jeżeli to samo zdarzenie (ta sama data) daje różne wyniki w zależności od BaseX, oznacza to, że
+                    wynik nie jest uniwersalny.
+                </p>
+            </div>
 
-                <div class="explanation-section">
-                    <h3>2. Hipoteza i Logika Analizy</h3>
-                    <p>
-                        Numerologia twierdzi, że liczby uzyskane z daty (przez sumowanie jej cyfr) mają
-                        <strong>uniwersalne, magiczne znaczenie</strong> i wpływają na życie człowieka.
-                    </p>
-                    <p>
-                        <strong>Test Logiczny (Hipoteza):</strong> Jeżeli numerologia miałaby uniwersalną wartość, to
-                        jej wyniki (np. suma cyfr daty, tzw. "Liczba Życia") <strong>powinny być niezależne od tego, w
-                            jakim systemie liczbowym zapiszemy datę</strong>.
-                    </p>
-                    <p style="font-weight: bold;">
-                        Jeżeli to samo zdarzenie (ta sama data) daje różne wyniki w zależności od BaseX, oznacza to, że
-                        wynik nie jest uniwersalny.
-                    </p>
-                </div>
+            <div class="explanation-section">
+                <h3>3. Co udowadniają wykresy? 🛑</h3>
+                <p>Wykresy pokazują, że test numerologii nie zdaje:</p>
+                <ol>
+                    <li>
+                        <strong>Suma cyfr jest zależna od BaseX:</strong> Różne linie na pierwszym wykresie (np.
+                        Base 10, Base 16, Base 3) pokazują drastycznie różne wartości dla tej samej daty. Wynik
+                        numerologii zależy od systemu liczbowego!
+                    </li>
+                    <li>
+                        <strong>Liczby Mistrzowskie są losowe:</strong> Częstotliwość występowania "Liczb
+                        Mistrzowskich" (np. 11, 22, AA, BB), które są kluczowe w numerologii, jest
+                        <strong>całkowicie przypadkowa</strong> i zmienia się z BaseX. Przykładowo, dla stycznia
+                        2025: w Base 10 mamy 2 Liczby Mistrzowskie, ale w Base 3 jest ich aż 8.
+                    </li>
+                </ol>
+                <p class="conclusion">
+                    <strong>Wniosek:</strong> Wyniki numerologii są całkowicie zależne od przypadku i arbitralnych
+                    konwencji zapisu. To dowodzi, że numerologia nie ma żadnej uniwersalnej wartości.
+                </p>
+            </div>
 
-                <div class="explanation-section">
-                    <h3>3. Co udowadniają wykresy? (Wniosek) 🛑</h3>
-                    <p>
-                        Wykresy pokazują, że test numerologii nie zdaje:
-                    <ol>
-                        <li><strong>Suma cyfr jest zależna od BaseX:</strong> Różne linie na pierwszym wykresie (np.
-                            Base 10, Base 16, Base 3) pokazują drastycznie różne wartości dla tej samej daty. Wynik
-                            numerologii zależy od systemu liczbowego!</li>
-                        <li><strong>Liczby Mistrzowskie są losowe:</strong> Częstotliwość występowania "Liczb
-                            Mistrzowskich" (np. 11, 22, AA, BB), które są kluczowe w numerologii, jest
-                            <strong>całkowicie przypadkowa</strong> i zmienia się z BaseX. Przykładowo, dla stycznia
-                            2025: w Base 10 mamy 2 Liczby Mistrzowskie, ale w Base 3 jest ich aż 8.
-                        </li>
-                    </ol>
-                    </p>
-                    <p class="conclusion" style="font-size: 1.1em; font-weight: bold;">
-                        Wniosek jest jednoznaczny: Wyniki numerologii są całkowicie zależne od przypadku i arbitralnych
-                        konwencji zapisu. To dowodzi, że numerologia nie ma żadnej uniwersalnej wartości.
-                    </p>
-                </div>
-
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/PjApEzmPn70?si=IUv33wDdi635dc-M"
+            <div class="video-container">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/PjApEzmPn70?si=IUv33wDdi635dc-M"
                     title="YouTube video player" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </div>
     </div>
-
-
 
     <!-- Drawer Szczegółów -->
     <div id="details-backdrop"></div>
@@ -312,7 +313,6 @@
         const btnBack = wrap.querySelector('[data-action="back"]');
         const btnFwd = wrap.querySelector('[data-action="forward"]');
         const btnSpeed = wrap.querySelector('[data-action="speed"]');
-        const btnLoop = wrap.querySelector('[data-action="loop"]');
         const seek = wrap.querySelector('[data-role="seek"]');
 
         // play/pause
@@ -336,14 +336,7 @@
             audio.playbackRate = rate;
             btnSpeed.textContent = rate + '×';
         };
-
-        // loop
-        btnLoop.onclick = () => {
-            audio.loop = !audio.loop;
-            btnLoop.style.background = audio.loop ? '#444' : '#222';
-        };
     </script>
-
 </body>
 
 </html>

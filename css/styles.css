@@ -6,19 +6,26 @@ html,
 body {
     margin: 0;
     padding: 0;
-    width: 100vw;
+    width: 100%;
     box-sizing: border-box;
     font-family: sans-serif;
     background: #f4f4f4;
 }
-
+.btn-link a {
+    color: #fff;
+    text-decoration: none !important;
+}
+.btn-link a:visited{
+    color: #fff !important;
+    text-decoration: none;
+}
 .audio-container {
   padding: 1rem;
   position: sticky;
   top: 0px;
   background: #111;
   border-radius: 12px;
-  max-width: 100vw;
+  max-width: 100%;
   color: #eee;
   font-family: sans-serif;
   z-index: 100;
@@ -50,7 +57,7 @@ body {
    ================================================================= */
 
 #controls {
-    width: 100vw;
+    width: 100%;
     box-sizing: border-box;
     padding: 12px;
     display: flex;
@@ -77,6 +84,11 @@ body {
     background-color: #0056b3;
 }
 
+#controls button.btn-link a {
+    color: white;
+    text-decoration: none;
+}
+
 /* =================================================================
    OBSZAR WYKRESÓW
    ================================================================= */
@@ -84,7 +96,7 @@ body {
 #chart-area {
     display: flex;
     flex-direction: column;
-    width: 100vw;
+    width: 100%;
     box-sizing: border-box;
     padding: 0px;
 }
@@ -191,10 +203,11 @@ body {
 }
 
 /* =================================================================
-   DRAWER SZCZEGÓŁÓW
+   DRAWER SZCZEGÓŁÓW I WYJAŚNIENIA - WSPÓLNE
    ================================================================= */
 
-#details-backdrop {
+#details-backdrop,
+#explanation-backdrop {
     display: none;
     position: fixed;
     z-index: 999;
@@ -207,11 +220,13 @@ body {
     transition: opacity 0.3s ease-out;
 }
 
-#details-backdrop.open {
+#details-backdrop.open,
+#explanation-backdrop.open {
     opacity: 1;
 }
 
-#details-drawer {
+#details-drawer,
+#explanation-drawer {
     position: fixed;
     z-index: 1000;
     right: 0;
@@ -226,11 +241,12 @@ body {
     padding: 32px;
 }
 
-#details-drawer.open {
+#details-drawer.open,
+#explanation-drawer.open {
     transform: translateX(0);
 }
 
-#details-drawer .drawer-header {
+.drawer-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -239,16 +255,20 @@ body {
     border-bottom: 2px solid #eee;
 }
 
-#details-drawer .drawer-header h2 {
+.drawer-header h2 {
     margin: 0;
     font-size: 1.5em;
     color: #333;
 }
 
-#details-drawer .close {
+.drawer-header .close {
     float: none;
     margin: 0;
 }
+
+/* =================================================================
+   DRAWER SZCZEGÓŁÓW - TABELA
+   ================================================================= */
 
 .details-table {
     width: 100%;
@@ -273,26 +293,50 @@ body {
 }
 
 /* =================================================================
-   MODAL WYJAŚNIENIA
+   DRAWER WYJAŚNIENIA - SEKCJE
    ================================================================= */
 
-#explanation-modal .explanation-section {
+.drawer-content {
+    line-height: 1.7;
+}
+
+.explanation-section {
     padding: 10px 0;
 }
 
-#explanation-modal h3 {
+.explanation-section h3 {
     color: #1a73e8;
     border-bottom: 1px solid #eee;
     padding-bottom: 5px;
     margin-top: 20px;
 }
 
-#explanation-modal p {
+.explanation-section p {
     margin-top: 10px;
-    line-height: 1.7;
 }
 
-#explanation-modal .conclusion {
+.explanation-section ul,
+.explanation-section ol {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.explanation-section li {
+    margin-bottom: 8px;
+}
+
+.highlight {
+    font-style: italic;
+    background-color: #fff3cd;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.emphasis {
+    font-weight: bold;
+}
+
+.conclusion {
     background-color: #f8d7da;
     border: 1px solid #f5c6cb;
     color: #721c24;
@@ -300,6 +344,19 @@ body {
     border-radius: 5px;
     margin-top: 20px;
 }
+
+.video-container {
+    margin-top: 20px;
+}
+
+.video-container iframe {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+/* =================================================================
+   INPUTS
+   ================================================================= */
 
 #controls input[type="date"] {
     padding: 10px;
@@ -321,25 +378,10 @@ body {
    ================================================================= */
 
 @media (max-width: 700px) {
-    #controls {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .modal-content {
-        width: 95%;
-        margin-top: 10%;
-    }
-
-    #details-drawer {
-        width: 100%;
-    }
-}
-
-@media (max-width: 700px) {
     body {
         font-size: x-small;
     }
+    
     #controls {
         flex-direction: column;
         align-items: stretch;
@@ -362,7 +404,7 @@ body {
     .chart-title {
         margin-left: 0;
         font-size: 1.2em;
-        padding: 12px 0px 0px 8px ;
+        padding: 12px 0px 0px 8px;
     }
 
     .chart-subtitle {
@@ -376,12 +418,13 @@ body {
         padding: 2px;
     }
 
-    #details-drawer {
+    #details-drawer,
+    #explanation-drawer {
         width: 100%;
         padding: 2px;
     }
 
-    #details-drawer .drawer-header {
+    .drawer-header {
         padding-bottom: 2px;
         margin-bottom: 2px;
     }

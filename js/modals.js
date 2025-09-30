@@ -24,17 +24,33 @@ export function closeSettingsModal() {
 }
 
 /**
- * Otwiera modal wyjaśnienia
+ * Otwiera drawer wyjaśnienia
  */
-export function openExplanationModal() {
-    document.getElementById('explanation-modal').style.display = 'block';
+export function openExplanationDrawer() {
+    const backdrop = document.getElementById('explanation-backdrop');
+    const drawer = document.getElementById('explanation-drawer');
+    
+    backdrop.style.display = 'block';
+    
+    requestAnimationFrame(() => {
+        backdrop.classList.add('open');
+        drawer.classList.add('open');
+    });
 }
 
 /**
- * Zamyka modal wyjaśnienia
+ * Zamyka drawer wyjaśnienia
  */
-export function closeExplanationModal() {
-    document.getElementById('explanation-modal').style.display = 'none';
+export function closeExplanationDrawer() {
+    const backdrop = document.getElementById('explanation-backdrop');
+    const drawer = document.getElementById('explanation-drawer');
+    
+    backdrop.classList.remove('open');
+    drawer.classList.remove('open');
+    
+    setTimeout(() => {
+        backdrop.style.display = 'none';
+    }, 300);
 }
 
 /**
@@ -198,8 +214,8 @@ export function setupModalCloseHandlers() {
     window.onclick = function (event) {
         if (event.target == document.getElementById('settings-modal')) {
             closeSettingsModal();
-        } else if (event.target == document.getElementById('explanation-modal')) {
-            closeExplanationModal();
+        } else if (event.target == document.getElementById('explanation-backdrop')) {
+            closeExplanationDrawer();
         } else if (event.target == document.getElementById('details-backdrop')) {
             closeDetailsModal();
         }
