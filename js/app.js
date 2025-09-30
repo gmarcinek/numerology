@@ -14,9 +14,7 @@ import {
 } from './charts/index.js';
 import { 
     openSettingsModal, 
-    closeSettingsModal, 
-    openExplanationDrawer, 
-    closeExplanationDrawer, 
+    closeSettingsModal,
     closeDetailsModal,
     openDetailsModal,
     toggleAllBases, 
@@ -123,8 +121,6 @@ function exportToWindow() {
     window.runAnalysis = runAnalysis;
     window.openSettingsModal = () => openSettingsModal(activeBases);
     window.closeSettingsModal = closeSettingsModal;
-    window.openExplanationDrawer = openExplanationDrawer;
-    window.closeExplanationDrawer = closeExplanationDrawer;
     window.closeDetailsModal = closeDetailsModal;
     window.toggleAllBases = toggleAllBases;
     window.applySettings = applySettings;

@@ -2,8 +2,9 @@
    MODALE - Obsługa Okien Dialogowych
    ================================================================= */
 
-import { ALL_BASES, MIN_BASE, MAX_BASE } from './config.js';
-
+import { MIN_BASE, MAX_BASE } from './config.js';
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+                     || window.innerWidth < 768;
 /**
  * Otwiera modal ustawień BaseX
  * @param {Array<number>} activeBases - Aktualnie aktywne bazy
@@ -21,36 +22,6 @@ export function openSettingsModal(activeBases) {
  */
 export function closeSettingsModal() {
     document.getElementById('settings-modal').style.display = 'none';
-}
-
-/**
- * Otwiera drawer wyjaśnienia
- */
-export function openExplanationDrawer() {
-    const backdrop = document.getElementById('explanation-backdrop');
-    const drawer = document.getElementById('explanation-drawer');
-    
-    backdrop.style.display = 'block';
-    
-    requestAnimationFrame(() => {
-        backdrop.classList.add('open');
-        drawer.classList.add('open');
-    });
-}
-
-/**
- * Zamyka drawer wyjaśnienia
- */
-export function closeExplanationDrawer() {
-    const backdrop = document.getElementById('explanation-backdrop');
-    const drawer = document.getElementById('explanation-drawer');
-    
-    backdrop.classList.remove('open');
-    drawer.classList.remove('open');
-    
-    setTimeout(() => {
-        backdrop.style.display = 'none';
-    }, 300);
 }
 
 /**
@@ -134,7 +105,7 @@ function populateDetailsTable(container, data) {
                 <th>Zapis Daty</th>
                 <th>Suma</th>
                 <th>Normalizowana</th>
-                <th>Mistrzowska?</th>
+                ${!isMobile ? '<th>Mistrzowska?</th>' : ""}
             </tr>
         </thead>
         <tbody></tbody>
@@ -149,7 +120,8 @@ function populateDetailsTable(container, data) {
             <td>${item.baseDate}</td>
             <td>${item.sumBaseX}</td>
             <td>${item.sumBase10}</td>
-            <td>${item.magic}</td>
+            ${!isMobile ? `<td>${item.magic}</td>` : ""}
+            
         `;
     });
 

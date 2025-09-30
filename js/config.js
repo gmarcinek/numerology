@@ -33,6 +33,17 @@ export const baseColorMap = {
     14: '#7dcb00ff', // limonkowy
     15: '#ffd726',  // złoty
     16: '#c26f79ff',  // purp
-    17: '#f05cc4ff',  // fuksja
+    17: '#23016eff',
+    18: '#f05cc4ff', 
+    19: '#5cf0b2ff', 
+    20: '#f8ff7bff', 
+    21: '#ffcc7bff', 
+    22: '#526452ff', 
+    23: '#1a343eff', 
+    24: '#fb00ffff', 
+    25: '#ff0044ff', 
+    26: '#ffbfa4ff', 
+    27: '#9123f8ff', 
+    28: '#415c8aff', 
 };
 export const magicSumColorMap = {};

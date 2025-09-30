@@ -24,7 +24,6 @@ body {
   position: sticky;
   top: 0px;
   background: #111;
-  border-radius: 12px;
   max-width: 100%;
   color: #eee;
   font-family: sans-serif;
@@ -62,10 +61,19 @@ body {
     padding: 12px;
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 8px;
     align-items: center;
     background: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+#controls .form-controls {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
     z-index: 2;
 }
 
@@ -73,7 +81,7 @@ body {
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
-    background-color: #007bff;
+    
     color: white;
     cursor: pointer;
     font-weight: bold;
@@ -395,8 +403,26 @@ body {
     #controls {
         flex-direction: column;
         align-items: stretch;
-        padding: 2px;
-        gap: 2px;
+    }
+    #controls .form-controls * {
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        z-index: 2;
+        
+    }
+    .form-controls {
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        align-items: center;
+        z-index: 2;
+        text-align: center;
+        padding: 0;
     }
 
     #chart-area {
@@ -405,10 +431,10 @@ body {
 
     .chart-container {
         padding: 2px;
-        padding-bottom: 190px;
+        padding-bottom: 35vh;
         padding-right: 18px;
         margin-bottom: 2px;
-        height: 50vh;
+        height: 80vh;
     }
 
     .chart-title {
@@ -432,6 +458,7 @@ body {
     #explanation-drawer {
         width: 94%;
         padding: 3%;
+        font-size: smaller;
     }
 
     .drawer-header {

@@ -25,20 +25,6 @@
 </head>
 
 <body>
-    <!-- Panel Kontrolny -->
-    <div id="controls">
-        <input type="date" id="dateFrom" value="2025-01-01" placeholder="Od">
-        <input type="date" id="dateTo" value="2025-12-31" placeholder="Do">
-        <button onclick="runAnalysis()" style="background-color: #286800;">Zatwierdź Daty</button>
-        <button onclick="openSettingsModal()" style="background-color: #556b47;">Ustawienia Wykresów</button>
-        |
-        <button onclick="openExplanationDrawer()" style="background-color: #404040;">Wyjaśnienie Numerologii</button>
-        <button style="background-color: #404040;" class="btn-link">
-            <a href="https://www.instagram.com/gmarcinek.photo/" target="_blank">Kontakt</a>
-        </button>
-    </div>
-
-
     <div class="audio-container" id="player">
         <audio src="./assets/audio.mp4"></audio>
         <div class="audio-controls">
@@ -47,6 +33,16 @@
             <button class="audio-btn" data-action="forward">⏩ 15s</button>
             <input class="audio-range" type="range" min="0" max="1000" value="0" step="1" data-role="seek">
             <button class="audio-btn" data-action="speed">1×</button>
+        </div>
+    </div>
+
+    <!-- Panel Kontrolny -->
+    <div id="controls">
+        <div class="form-controls">
+            <input type="date" id="dateFrom" value="2025-01-01" placeholder="Od">
+            <input type="date" id="dateTo" value="2025-12-31" placeholder="Do">
+            <button onclick="runAnalysis()" style="background-color: #ff4000;">Zatwierdź Daty</button>
+            <button onclick="openSettingsModal()" style="background-color: #404040;">Ustawienia</button>
         </div>
     </div>
 
@@ -198,38 +194,11 @@
             </p>
         </div>
 
-
-    </div>
-
-    <!-- Modal Ustawień BaseX -->
-    <div id="settings-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeSettingsModal()">&times;</span>
-            <h2>Ustawienia Wykresów BaseX (2-16)</h2>
-
-            <div class="setting-controls">
-                <button onclick="toggleAllBases(true)">Wybierz Wszystkie (2-16)</button>
-                <button onclick="toggleAllBases(false)">Odznacz Wszystkie</button>
-            </div>
-
-            <div id="base-settings"></div>
-
-            <button onclick="applySettings()" style="margin-top: 20px; padding: 10px;">
-                Zastosuj i Uruchom Analizę
-            </button>
-        </div>
-    </div>
-
-    <!-- Drawer Wyjaśnienia -->
-    <div id="explanation-backdrop"></div>
-    <div id="explanation-drawer">
-        <div class="drawer-header">
+        <div style="font-family: sans-serif; line-height:1.6; max-width:900px; margin:0 auto; padding:20px;">
             <h2>Po co to całe zamieszanie?</h2>
-            <span class="close" onclick="closeExplanationDrawer()">&times;</span>
-        </div>
-        <div class="drawer-content">
+
             <div class="explanation-section">
-                <h3>0. Czym w ogóle jest system liczbowy?</h3>
+                <h3>Czym w ogóle jest system liczbowy?</h3>
                 <p>
                     System liczbowy to <strong>umowa</strong>, jak zapisywać ilości. Tak jak alfabet to umowa,
                     jak zapisywać dźwięki. Możesz użyć cyfr arabskich (0-9), liter (A-Z),
@@ -344,6 +313,27 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
+        </div>
+    </div>
+
+    </div>
+
+    <!-- Modal Ustawień BaseX -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSettingsModal()">&times;</span>
+            <h2>Ustawienia Wykresów BaseX (2-16)</h2>
+
+            <div class="setting-controls">
+                <button onclick="toggleAllBases(true)">Wybierz Wszystkie (2-16)</button>
+                <button onclick="toggleAllBases(false)">Odznacz Wszystkie</button>
+            </div>
+
+            <div id="base-settings"></div>
+
+            <button onclick="applySettings()" style="margin-top: 20px; padding: 10px;">
+                Zastosuj i Uruchom Analizę
+            </button>
         </div>
     </div>
 
