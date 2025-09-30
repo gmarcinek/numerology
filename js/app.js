@@ -70,7 +70,7 @@ function runAnalysis() {
     let dateTo = document.getElementById('dateTo').value;
 
     if (activeBases.length === 0) {
-        alert("Wybierz BaseX w Ustawieniach (2-40) przed uruchomieniem analizy.");
+        alert("Wybierz BaseX w Ustawieniach (2-16) przed uruchomieniem analizy.");
         return;
     }
 

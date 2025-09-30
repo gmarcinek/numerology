@@ -205,10 +205,10 @@
     <div id="settings-modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeSettingsModal()">&times;</span>
-            <h2>Ustawienia Wykresów BaseX (2-40)</h2>
+            <h2>Ustawienia Wykresów BaseX (2-16)</h2>
 
             <div class="setting-controls">
-                <button onclick="toggleAllBases(true)">Wybierz Wszystkie (2-40)</button>
+                <button onclick="toggleAllBases(true)">Wybierz Wszystkie (2-16)</button>
                 <button onclick="toggleAllBases(false)">Odznacz Wszystkie</button>
             </div>
 
@@ -229,7 +229,57 @@
         </div>
         <div class="drawer-content">
             <div class="explanation-section">
-                <h3>1. Wprowadzenie: Czym są Pozycyjne Systemy Liczbowe (BaseX)?</h3>
+                <h3>0. Czym w ogóle jest system liczbowy?</h3>
+                <p>
+                    System liczbowy to <strong>umowa</strong>, jak zapisywać ilości. Tak jak alfabet to umowa,
+                    jak zapisywać dźwięki. Możesz użyć cyfr arabskich (0-9), liter (A-Z),
+                    symboli (★☆♠♣) - wszystko jedno, liczy się tylko <strong>pozycja</strong> znaku.
+                </p>
+
+                <p><strong>Base 10 (system dziesiętny)</strong> - standardowy system ludzki:</p>
+                <ul>
+                    <li>Używa 10 symboli: <code>0 1 2 3 4 5 6 7 8 9</code></li>
+                    <li>Liczba 347 oznacza: 3×100 + 4×10 + 7×1</li>
+                    <li>Każda pozycja to potęga 10: ...1000, 100, 10, 1</li>
+                </ul>
+
+                <p><strong>Base 2 (binarny)</strong> - język komputerów:</p>
+                <ul>
+                    <li>Używa 2 symboli: <code>0 1</code></li>
+                    <li>Liczba 1011 oznacza: 1×8 + 0×4 + 1×2 + 1×1 = 11 (w Base10)</li>
+                    <li>Każda pozycja to potęga 2: ...8, 4, 2, 1</li>
+                </ul>
+
+                <p><strong>Base 4 (czwórkowy)</strong>:</p>
+                <ul>
+                    <li>Używa 4 symboli: <code>0 1 2 3</code></li>
+                    <li>Liczba 213 oznacza: 2×16 + 1×4 + 3×1 = 39 (w Base10)</li>
+                    <li>Każda pozycja to potęga 4: ...64, 16, 4, 1</li>
+                </ul>
+
+                <p class="highlight">
+                    <strong>Kluczowa prawda:</strong> Symbole są dowolne. Moglibyśmy zapisywać Base10
+                    jako <code>PQRSTUWXYZ</code> zamiast <code>0123456789</code>:
+                </p>
+
+                <div
+                    style="background: #f5f5f5; padding: 16px; margin: 16px 0; border-left: 3px solid #2a2a2a; font-family: monospace;">
+                    <div style="margin-bottom: 8px;"><strong>Base10 standardowo:</strong> 347 = 3×100 + 4×10 + 7×1</div>
+                    <div><strong>Base10 w PQRSTUWXYZ:</strong> SRW = S×100 + R×10 + W×1</div>
+                    <div style="margin-top: 12px; font-size: 0.9em; color: #666;">
+                        gdzie: P=0, Q=1, R=2, S=3, T=4, U=5, W=6, X=7, Y=8, Z=9
+                    </div>
+                </div>
+
+                <p>
+                    To <strong>ta sama liczba</strong>, tylko inny sposób zapisu. Cyfry arabskie (0-9)
+                    nie są "prawdziwe" - to tylko historyczna umowa. Moglibyśmy równie dobrze używać
+                    emotikonów: 😀😁😂😃😄😅😆😇😈😉
+                </p>
+            </div>
+
+            <div class="explanation-section">
+                <h3>1. Dlaczego to ma znaczenie dla numerologii?</h3>
                 <p>
                     Codziennie używamy <strong>Systemu Dziesiętnego (Base 10)</strong>, który do zapisu liczb
                     wykorzystuje dziesięć cyfr (0-9). System liczbowy to jednak tylko <strong>narzędzie
@@ -289,7 +339,7 @@
             </div>
 
             <div class="video-container">
-                <iframe width="100%" height="315" src="https://www.youtube.com/embed/PjApEzmPn70?si=IUv33wDdi635dc-M"
+                <iframe width="100%" height="440" src="https://www.youtube.com/embed/PjApEzmPn70?si=IUv33wDdi635dc-M"
                     title="YouTube video player" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

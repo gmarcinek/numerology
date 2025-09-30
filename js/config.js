@@ -12,7 +12,7 @@ export const ALL_BASES = Array.from(
     (_, i) => i + MIN_BASE
 );
 
-// Zestaw symboli dla baz 2-40 (0-9, A-Z, @, #, $, £)
+// Zestaw symboli dla baz 2-16 (0-9, A-Z, @, #, $, £)
 export const CUSTOM_DIGITS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$£';
 
 // Mapowania kolorów (inicjalizowane jako puste obiekty)

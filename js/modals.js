@@ -130,11 +130,11 @@ function populateDetailsTable(container, data) {
     table.innerHTML = `
         <thead>
             <tr>
-                <th>BaseX</th>
-                <th>Suma Base10 (Wartość)</th>
-                <th>Suma BaseX (Numerologiczna)</th>
-                <th>Zapis Daty BaseX</th>
-                <th>Liczba Mistrzowska?</th>
+                <th>System Pozycyjny</th>
+                <th>Zapis Daty</th>
+                <th>Suma</th>
+                <th>Normalizowana</th>
+                <th>Mistrzowska?</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -146,9 +146,9 @@ function populateDetailsTable(container, data) {
         row.className = item.magic === 'TAK 🎉' ? 'correlated' : '';
         row.innerHTML = `
             <td>Base ${item.base}</td>
-            <td>${item.sumBase10}</td>
-            <td>${item.sumBaseX}</td>
             <td>${item.baseDate}</td>
+            <td>${item.sumBaseX}</td>
+            <td>${item.sumBase10}</td>
             <td>${item.magic}</td>
         `;
     });

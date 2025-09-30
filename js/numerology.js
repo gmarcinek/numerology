@@ -7,7 +7,7 @@ import { MIN_BASE, MAX_BASE, CUSTOM_DIGITS } from './config.js';
 /**
  * Konwertuje liczbę dziesiętną na reprezentację w systemie BaseX
  * @param {number} num - Liczba do konwersji
- * @param {number} base - Docelowy system liczbowy (2-40)
+ * @param {number} base - Docelowy system liczbowy (2-16)
  * @returns {string} - Reprezentacja liczby w systemie BaseX
  */
 export function toBaseStr(num, base) {
