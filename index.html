@@ -21,6 +21,7 @@
 
         gtag('config', 'G-4FCTMZW1CR');
     </script>
+
 </head>
 
 <body>
@@ -28,17 +29,25 @@
     <div id="controls">
         <input type="date" id="dateFrom" value="2025-01-01" placeholder="Od">
         <input type="date" id="dateTo" value="2025-12-31" placeholder="Do">
-        <button onclick="openSettingsModal()">Ustawienia BaseX (2-40)</button>
-        <button onclick="runAnalysis()">Oblicz i Pokaż Wykresy</button>
+        <button onclick="openSettingsModal()" style="background-color: #67a300;">Ustawienia BaseX (2-40)</button>
+        <button onclick="runAnalysis()" style="background-color: #ff7b00;">Oblicz i Pokaż Wykresy</button>
         |
-        <button onclick="openExplanationModal()">Wyjaśnienie / O Baleniu Numerologii</button>
-        <button><a href="https://www.instagram.com/gmarcinek.photo/">Kontakt</a></button>
+        <button onclick="openExplanationModal()" style="background-color: #404040;">Wyjaśnienie / O Obalaniu
+            Numerologii</button>
+        <button style="background-color: #fce23b; color: #eee;"><a
+                href="https://www.instagram.com/gmarcinek.photo/">Kontakt</a></button>
     </div>
 
-    <audio controls style="width: 100%;">
-        <source src="./assets/audio.mp4" type="audio/mpeg">
-        Twoja przeglądarka nie obsługuje elementu audio.
-    </audio>
+    <div class="audio-container" id="player">
+        <audio src="./assets/audio.mp4"></audio>
+        <div class="audio-controls">
+            <button class="audio-btn" data-action="toggle">▶</button>
+            <button class="audio-btn" data-action="back">⏪ 10s</button>
+            <button class="audio-btn" data-action="forward">⏩ 15s</button>
+            <input class="audio-range" type="range" min="0" max="1000" value="0" step="1" data-role="seek">
+            <button class="audio-btn" data-action="speed">1×</button>
+        </div>
+    </div>
 
     <!-- Obszar Wykresów -->
     <div id="chart-area">
@@ -296,6 +305,45 @@
         </div>
         <div id="details-content"></div>
     </div>
+    <script>
+        const wrap = document.getElementById('player');
+        const audio = wrap.querySelector('audio');
+        const btnToggle = wrap.querySelector('[data-action="toggle"]');
+        const btnBack = wrap.querySelector('[data-action="back"]');
+        const btnFwd = wrap.querySelector('[data-action="forward"]');
+        const btnSpeed = wrap.querySelector('[data-action="speed"]');
+        const btnLoop = wrap.querySelector('[data-action="loop"]');
+        const seek = wrap.querySelector('[data-role="seek"]');
+
+        // play/pause
+        btnToggle.onclick = () => {
+            if (audio.paused) { audio.play(); btnToggle.textContent = '⏸'; }
+            else { audio.pause(); btnToggle.textContent = '▶'; }
+        };
+
+        // back/forward
+        btnBack.onclick = () => audio.currentTime -= 10;
+        btnFwd.onclick = () => audio.currentTime += 15;
+
+        // seek
+        audio.ontimeupdate = () => { seek.value = (audio.currentTime / audio.duration) * 1000; };
+        seek.oninput = () => { audio.currentTime = (seek.value / 1000) * audio.duration; };
+
+        // prędkość
+        let rate = 1;
+        btnSpeed.onclick = () => {
+            rate = rate === 2 ? 1 : rate + 0.25;
+            audio.playbackRate = rate;
+            btnSpeed.textContent = rate + '×';
+        };
+
+        // loop
+        btnLoop.onclick = () => {
+            audio.loop = !audio.loop;
+            btnLoop.style.background = audio.loop ? '#444' : '#222';
+        };
+    </script>
+
 </body>
 
 </html>
