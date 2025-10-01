@@ -89,27 +89,88 @@
         </div>
 
         <div style="font-family: sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px;">
-            <h2>Korelacja z Base10: Wnioski</h2>
+            <h2>Korelacja archetypów z Base10: Wnioski i sposób czytania</h2>
+
             <p>
-                Wykres przedstawia, ile z 15 aktywnych systemów liczbowych (Base2–Base16)
-                daje w danym dniu identyczną sumę numerologiczną jak system dziesiętny (Base10).
-                Kolorowe słupki pokazują systemy, które „trafiły" w wynik Base10,
-                natomiast szary pas oznacza brak korelacji.
+                Ten wykres <strong>nie pokazuje korelacji statystycznej</strong>, tylko prostą
+                <strong>zgodność archetypów</strong> pomiędzy systemem dziesiętnym (Base10) a innymi bazami
+                (Base2–Base16).
+                Przez <em>archetyp</em> rozumiemy <strong>redukcję cyfrową</strong> (digital root) do wartości 1–9,
+                z opcjonalnym zatrzymaniem na tzw. <strong>liczbach mistrzowskich</strong> (np. 11, 22, 33).
             </p>
 
+            <h3>Co jest liczone?</h3>
             <ul>
-                <li><strong>Dominacja szarości:</strong> Zdecydowana większość systemów nie koreluje z Base10.</li>
-                <li><strong>Sporadyczne pokrycia:</strong> Czasami 2–4 systemy naraz dają tę samą sumę co Base10, ale to
-                    wyjątek.</li>
-                <li><strong>Wniosek główny:</strong> Base10 nie ma matematycznej przewagi – jego wyjątkowość
-                    wynika z kulturowego przyjęcia jako standardu, a nie z uniwersalnej prawdy.</li>
+                <li>Dla każdej daty wyznaczamy <strong>archetyp Base10</strong>.</li>
+                <li>Dla każdej aktywnej bazy <code>BaseX</code> (X ≠ 10) wyznaczamy <strong>archetyp BaseX</strong>.
+                </li>
+                <li>Jeśli <code>archetyp(BaseX) == archetyp(Base10)</code>, to dla tej bazy i daty liczymy
+                    <strong>1</strong> (zgodność), w przeciwnym razie <strong>0</strong>.
+                </li>
+            </ul>
+
+            <h3>Jak czytać słupki?</h3>
+            <ul>
+                <li><strong>Kolorowe segmenty</strong> (opisane „Base X”) oznaczają bazy, które w danym dniu mają
+                    <em>ten sam archetyp co Base10</em>.
+                </li>
+                <li><strong>Szary segment</strong> („Inny archetyp niż Base10”) pokazuje <em>ile baz</em> w danym dniu
+                    ma
+                    <strong>inny archetyp</strong> niż Base10.
+                </li>
+                <li><strong>Oś Y</strong> to liczba aktywnych baz (maksimum = liczba zaznaczonych baz; Base10 jest tylko
+                    punktem odniesienia i nie jest liczona do sumy).</li>
+                <li><strong>Tooltip</strong> zawiera <em>archetyp Base10</em> oraz listę archetypów wszystkich baz z
+                    oznaczeniem
+                    <code>(=)</code> / <code>(≠)</code>.
+                </li>
+            </ul>
+
+            <h3>Wątki merytoryczne</h3>
+            <ul>
+                <li><strong>To nie jest korelacja statystyczna</strong>, tylko sprawdzenie równości archetypów (zgodność
+                    <em>tak/nie</em>).
+                </li>
+                <li><strong>Zmiana bazy zmienia zapis liczby</strong> (rozklad cyfr), więc zmienia też sumy cyfr i wynik
+                    redukcji.
+                    Dlatego wraz z oddalaniem się od Base10 <strong>zgodności stają się rzadsze</strong>.</li>
+                <li>W bazach „bliskich” 10 (np. 9, 11, 12) sporadyczne zgodności są możliwe; od okolic <strong>Base11 w
+                        górę</strong>
+                    można spodziewać się <strong>pojedynczych lub zerowych trafień</strong> (zależnie od danych).</li>
+                <li><strong>Liczby mistrzowskie</strong> (jeśli stosowane) <em>nie są redukowane dalej</em>. To znaczy,
+                    że
+                    np. <code>11</code> <strong>nie</strong> jest traktowane jako <code>2</code>; zgodność wymaga
+                    zgodności
+                    <code>11 ↔ 11</code> (a nie <code>11 ↔ 2</code>).
+                </li>
+                <li><strong>Archetypy powyżej 9</strong>: w systemach powyżej Base10 mogą pojawiać się wartości
+                    oznaczane jako
+                    <code>A</code>, <code>B</code>, <code>C</code> … aż do <code>F</code> (w systemie szesnastkowym).
+                    Takie archetypy <strong>nigdy nie skorelują z Base10</strong>, ponieważ system dziesiętny
+                    nie posiada archetypów większych niż 9.
+                </li>
+            </ul>
+
+            <h3>Wnioski z wykresu</h3>
+            <ul>
+                <li><strong>Dominacja szarości</strong> wskazuje, że większość baz <em>nie dzieli</em> tego samego
+                    archetypu co Base10 w danym dniu.</li>
+                <li><strong>Zgodności wielobazowe</strong> (kilka kolorów jednego dnia) to <em>wyjątki</em> i zwykle
+                    przypadkowe zbiegi.</li>
+                <li><strong>Wniosek główny:</strong> „Wyjątkowość” Base10 wynika z kulturowego standardu, a nie z
+                    uniwersalnej
+                    prawdy numerologicznej – po zmianie bazy <strong>archetyp często się rozjeżdża</strong>, a w bazach
+                    powyżej 10
+                    pojawiają się archetypy, które z definicji nie mają żadnego odpowiednika w Base10.</li>
             </ul>
 
             <p>
-                Innymi słowy: <em>system dziesiętny nie jest bardziej „prawdziwy" niż inne –
-                    po prostu został przyjęty przez ludzi jako punkt odniesienia.</em>
+                W skrócie: <em>wykres pokazuje, jak rzadko archetyp z innych baz pokrywa się z archetypem Base10.
+                    A jeśli baza generuje archetypy powyżej 9 (np. A–F), korelacja jest całkowicie niemożliwa.
+                    To wizualny dowód arbitralności wyboru systemu liczbowego.</em>
             </p>
         </div>
+
 
         <div id="chart-container-correlation" class="chart-container">
             <div class="chart-title" id="correlation-chart-title"></div>
@@ -118,48 +179,34 @@
         </div>
 
         <div style="font-family: sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px;">
-            <h2>Wnioski z wykresów korelacji</h2>
+            <h2>Interpretacja wykresu ogólnej korelacji archetypów</h2>
 
-            <h3>1. Korelacja z Base10</h3>
             <p>
-                Pierwszy wykres pokazuje, ile z 15 aktywnych systemów liczbowych (Base2–Base16)
-                daje w danym dniu identyczną sumę numerologiczną jak system dziesiętny (Base10).
+                Wykres pokazuje, jak w danym dniu systemy liczbowe (Base2–Base16) grupują się we
+                <strong>wspólne korelacje archetypów</strong>.
+                Każdy <strong style="color:#007c55;">kolorowy segment</strong> oznacza
+                <em>jedną konkretną korelację</em> – czyli zestaw baz, które tego dnia
+                dały identyczny archetyp (np. wszystkie mają 7, albo wszystkie mają 22).
             </p>
-            <ul>
-                <li>Większość systemów <strong>nie pokrywa się z Base10</strong> – dominuje szary pas oznaczający brak
-                    korelacji.</li>
-                <li>Sporadycznie zdarza się, że 2–4 systemy dają ten sam wynik co Base10.</li>
-                <li><strong>Wniosek:</strong> korelacja z Base10 jest wyjątkiem, a nie regułą. System dziesiętny
-                    nie ma matematycznej przewagi – jego „prawdziwość" jest kulturowa, nie uniwersalna.</li>
-            </ul>
 
-            <h3>2. Korelacja sum numerologicznych między systemami</h3>
-            <p>
-                Drugi wykres pokazuje, ile systemów liczbowych daje tę samą sumę numerologiczną między sobą,
-                niezależnie od Base10. Kolory oznaczają konkretne wartości sum (np. 7, 11, 21, 33).
-            </p>
             <ul>
-                <li>Korelacje są częste i rozproszone – występują na wielu różnych sumach, nie tylko „magicznych".</li>
-                <li>Zdarzają się dni, gdy nawet 8–10 systemów naraz daje identyczny wynik.</li>
-                <li><strong>Wniosek:</strong> systemy liczbowo-symboliczne często tworzą chwilowe sojusze,
-                    ale są one chaotyczne i nietrwałe. To potwierdza, że numerologia bazuje na
-                    <em>lokalnych zbiegach arytmetycznych</em>, a nie na uniwersalnym porządku.
-                </li>
-            </ul>
-
-            <h3>3. Porównanie obu wykresów</h3>
-            <ul>
-                <li><strong>Wykres 1:</strong> Base10 rzadko ma „sojuszników", jest raczej samotny.</li>
-                <li><strong>Wykres 2:</strong> między różnymi bazami pojawia się sporo korelacji,
-                    które jednak nie koncentrują się wokół jednej „prawdziwej" wartości.</li>
+                <li><strong>Kilka korelacji równolegle:</strong> w jednym dniu zwykle występuje kilka różnych grup baz,
+                    każda z innym archetypem.</li>
+                <li><strong>Brak dominacji jednej grupy:</strong> praktycznie nigdy nie zdarza się,
+                    żeby wszystkie systemy jednocześnie miały ten sam archetyp.
+                    Zawsze są to rozproszone „sojusze” po kilka baz.</li>
+                <li><strong>Szare segmenty:</strong> oznaczają bazy, które tego dnia nie miały żadnego partnera
+                    (tzw. singlety) albo wpadły w archetyp niepowtarzalny.</li>
             </ul>
 
             <p>
-                Podsumowując: <strong>Base10 nie jest wyjątkowe</strong>, a numerologia w różnych bazach
-                generuje liczne, ale przypadkowe punkty wspólne. To pokazuje arbitralność systemów liczbowych
-                i brak jednej „uprzywilejowanej" formy prawdy.
+                Innymi słowy: <strong>korelacje istnieją, ale są rozproszone i lokalne</strong>.
+                Numerologia w różnych bazach tworzy chwilowe układy zgodności,
+                lecz nie wskazuje jednego wspólnego centrum ani uniwersalnego archetypu.
+                To potwierdza arbitralność i nietrwałość tych „sojuszy”.
             </p>
         </div>
+
 
         <div id="chart-container-magic" class="chart-container">
             <div class="chart-title" id="magic-chart-title"></div>
