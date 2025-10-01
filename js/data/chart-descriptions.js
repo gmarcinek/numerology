@@ -9,19 +9,22 @@ export const CHART_DESCRIPTIONS = {
             `Pokazuje, jaką jedną liczbę (Suma Base10) otrzymujemy, sumując wszystkie cyfry daty zapisanej w różnych systemach liczbowych (BaseX). Każda linia to inny system pozycyjny. Grube punkty oznaczają Liczby Mistrzowskie.`
     },
     correlation: {
-        title: "Korelacja Sum Numerologicznych: Ile sum powtarza się?",
-        subtitle: (count) => 
-            `Wykres pokazuje, ile z ${count} aktywnych systemów liczbowych daje w danym dniu sumę normalizowaną do Base10, która powtarza się w innym systemie. Im wyższy słupek, tym większa jest korelacja pomiędzy różnymi systemami pozycyjnymi i tym bardziej wiarygodna jest numerologia. Maksymalna wartość: ${count} BaseX.`
+        title: "Korelacje archetypów: Ile systemów dzieli ten sam archetyp tego samego dnia?",
+        subtitle: (count) =>
+            `Wykres pokazuje z ilu z ${count} aktywnych baz tworzą się grupy współdzielące identyczny archetyp (digital root / liczby mistrzowskie) w danym dniu. 
+            Kolorowe segmenty = osobne grupy archetypów (każda to inny archetyp), szary = bazy bez par (singlety) lub z innym archetypem.`
     },
     magic: {
         title: "Wystąpienia Liczb Mistrzowskich (np. 11, 22, AA, BB)",
         subtitle: (count) => 
             `Wykres słupkowy pokazuje, w ilu aktywnych BaseX w danym dniu data prowadzi do Liczby Mistrzowskiej (sumy składającej się z identycznych, powtarzających się cyfr po przeliczeniu na system BaseX).`
     },
-     base10Correlation: {
-        title: "Korelacja z Base10: Ile systemów daje tę samą Sumę Numerologiczną co domyślny system ludzkości Base10?",
-        subtitle: (count) => 
-            `Wykres pokazuje, ile z ${count} aktywnych systemów liczbowych daje w danym dniu sumę Base10 identyczną jak w systemie dziesiętnym. Kolorowe stacki = korelujące BaseX, szary = niekorelujące. Base10 jako punkt odniesienia "prawdziwości".`
+    base10Correlation: {
+        title: "Korelacja archetypów z Base10: Ile systemów dzieli ten sam Archetyp co domyślny system ludzkości Base10?",
+        subtitle: (count) =>
+            `Wykres pokazuje, ile z ${count} aktywnych systemów liczbowych ma w danym dniu archetyp identyczny z Base10. 
+            Kolorowe segmenty = bazy o tym samym archetypie co Base10, szary = inne archetypy. 
+            Uwaga: w bazach powyżej 10 mogą pojawiać się archetypy A–F, które nigdy nie mają odpowiednika w Base10.`
     },
     archetype: {
         title: "Archetypy numerologiczne",
