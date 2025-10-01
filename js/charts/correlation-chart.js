@@ -132,7 +132,7 @@ export function drawCorrelationChart(labels, dailyCorrelationData, activeBases, 
                 x: { 
                     display: true, 
                     title: { display: true, text: 'Data' },
-                    ticks: { display: false },
+                    ticks: { display: true },
                     stacked: true
                 },
                 y: {

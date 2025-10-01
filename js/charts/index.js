@@ -7,6 +7,7 @@ import { drawCorrelationChart } from './correlation-chart.js';
 import { drawMagicChart } from './magic-chart.js';
 import { CHART_DESCRIPTIONS } from '../data/chart-descriptions.js';
 import { drawBase10CorrelationChart } from './base10-correlation-chart.js';
+import { drawArchetypeChart } from './archetypeChart.js';
 
 /**
  * Aktualizuje tytuły i podtytuły wykresów
@@ -34,7 +35,18 @@ export function updateSubtitles(activeBases) {
         CHART_DESCRIPTIONS.base10Correlation.title;
     document.getElementById('base10-correlation-chart-subtitle').textContent = 
         CHART_DESCRIPTIONS.base10Correlation.subtitle(activeCount);
+
+    document.getElementById('archetype-chart-title').textContent = 
+        CHART_DESCRIPTIONS.archetype.title;
+    document.getElementById('archetype-chart-subtitle').textContent = 
+        CHART_DESCRIPTIONS.archetype.subtitle(activeCount);
 }
 
 // Re-eksport funkcji rysujących wykresy
-export { drawMainChart, drawCorrelationChart, drawMagicChart, drawBase10CorrelationChart };
+export { 
+    drawMainChart, 
+    drawCorrelationChart, 
+    drawMagicChart, 
+    drawBase10CorrelationChart,
+    drawArchetypeChart
+};

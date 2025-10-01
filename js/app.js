@@ -10,7 +10,8 @@ import {
     drawMainChart, 
     drawMagicChart, 
     drawBase10CorrelationChart,
-    updateSubtitles 
+    updateSubtitles,
+    drawArchetypeChart
 } from './charts/index.js';
 import { 
     openSettingsModal, 
@@ -86,6 +87,7 @@ function runAnalysis() {
     drawCorrelationChart(dateLabels, dailyCorrelationData, activeBases, handleChartClick);
     drawMagicChart(allResults, dateLabels, dailyCorrelationData, activeBases, handleChartClick);
     drawBase10CorrelationChart(allResults, dateLabels, dailyCorrelationData, activeBases, handleChartClick);
+    drawArchetypeChart(allResults, dateLabels, activeBases, handleChartClick);
 }
 
 /**

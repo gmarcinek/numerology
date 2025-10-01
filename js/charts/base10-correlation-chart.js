@@ -114,7 +114,7 @@ export function drawBase10CorrelationChart(results, labels, dailyCorrelationData
                 x: { 
                     display: true, 
                     title: { display: true, text: 'Data' },
-                    ticks: { display: false },
+                    ticks: { display: true },
                     stacked: true
                 },
                 y: {

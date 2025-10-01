@@ -22,5 +22,10 @@ export const CHART_DESCRIPTIONS = {
         title: "Korelacja z Base10: Ile systemów daje tę samą Sumę Numerologiczną co domyślny system ludzkości Base10?",
         subtitle: (count) => 
             `Wykres pokazuje, ile z ${count} aktywnych systemów liczbowych daje w danym dniu sumę Base10 identyczną jak w systemie dziesiętnym. Kolorowe stacki = korelujące BaseX, szary = niekorelujące. Base10 jako punkt odniesienia "prawdziwości".`
+    },
+    archetype: {
+        title: "Archetypy numerologiczne",
+        subtitle: (activeCount) => 
+        `Redukcja sum BaseX do archetypu (1–9 albo liczby mistrzowskie). Analiza dla ${activeCount} aktywnych baz.`
     }
 };

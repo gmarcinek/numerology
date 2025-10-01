@@ -57,7 +57,7 @@ export function drawMagicChart(results, labels, dailyCorrelationData, activeBase
                 x: { 
                     display: true, 
                     title: { display: true, text: 'Data' }, 
-                    ticks: { display: false } 
+                    ticks: { display: true } 
                 },
                 y: {
                     beginAtZero: true,
