@@ -62,6 +62,7 @@ export function drawMainChart(results, labels, activeBases, onClickCallback) {
             pointBackgroundColor: color,
             pointBorderColor: '#000',
             pointBorderWidth: pointBorderWidth,
+            borderWidth: 2,
             showLine: true,
             fill: false,
             tension: 0.1,
