@@ -2,7 +2,7 @@
    ANALIZA DAT - Obliczenia Numerologiczne i Korelacje
    ================================================================= */
 
-import { toBaseStr, sumDigitsBase, isMagicNumber, getDatesInRange } from './numerology.js';
+import { toBaseStr, sumDigitsBase, isMasterPattern, getDatesInRange } from './numerology.js';
 
 /**
  * Analizuje daty w zakresie dla wszystkich aktywnych systemów BaseX
@@ -34,7 +34,7 @@ export function analyzeDates(dateFrom, dateTo, activeBases) {
 
             let sumBase10 = sumDigitsBase(fullDateStr, base);
             let sumStr = toBaseStr(sumBase10, base);
-            let magic = isMagicNumber(sumStr);
+            let magic = isMasterPattern(sumStr);
 
             // Inicjalizacja struktury dla dnia
             if (!dailyCorrelationData[dateStr]) {

@@ -298,9 +298,13 @@ sub {
 }
 
 .correlated {
-    background-color: #e6f7ff;
+    background-color: #ffe9e9;
     font-weight: bold;
 }
+.base10 {
+    border: 2px solid #d95151;
+}
+
 /* =================================================================
    DRAWER WYJAŚNIENIA - SEKCJE
    ================================================================= */

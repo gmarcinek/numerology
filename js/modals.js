@@ -3,8 +3,11 @@
    ================================================================= */
 
 import { MIN_BASE, MAX_BASE } from './config.js';
+import { reduceToArchetype, reduceToArchetypeBaseX, isMasterPattern  } from './numerology.js';
+
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
                      || window.innerWidth < 768;
+
 /**
  * Otwiera modal ustawień BaseX
  * @param {Array<number>} activeBases - Aktualnie aktywne bazy
@@ -82,7 +85,9 @@ function getDetailsForDate(date, allResults, activeBases) {
                 sumBaseX: result.sumStr,
                 baseDate: result.baseDate,
                 fullDateStr: result.fullDateStr,
-                magic: result.magic ? 'TAK 🎉' : 'NIE'
+                archetype10: reduceToArchetype(result.sumBase10),       // archetyp na osi 10
+                archetypeX: reduceToArchetypeBaseX(result.sumStr, base), // archetyp w tej bazie
+                isMaster: isMasterPattern(result.sumStr)
             });
         }
     });
@@ -101,11 +106,10 @@ function populateDetailsTable(container, data) {
     table.innerHTML = `
         <thead>
             <tr>
-                <th>System Pozycyjny</th>
+                <th>System</th>
                 <th>Zapis Daty</th>
                 <th>BaseX &sum;</th>
                 <th>Normal &sum;</th>
-                ${!isMobile ? '<th>Mistrzowska?</th>' : ""}
             </tr>
         </thead>
         <tbody></tbody>
@@ -114,17 +118,19 @@ function populateDetailsTable(container, data) {
 
     data.forEach(item => {
         const row = tbody.insertRow();
-        row.className = item.magic === 'TAK 🎉' ? 'correlated' : '';
+        const classes = [item.isMaster ? 'correlated' : '', item.base === 10 ? 'base10' : ''];
+        
+        row.className = classes.toString().replaceAll(',', ' ');
+        
         row.innerHTML = `
             <td>Base ${item.base}</td>
-            <td>${item.baseDate}<sub>${item.base}</sub></td>
-            <td>${item.sumBaseX}<sub>${item.base}</sub></td>
-            <td>${item.sumBase10}<sub>10</sub></td>
-            ${!isMobile ? `<td>${item.magic}</td>` : ""}
-            
-        `;
-    });
-
+            <td><small>${item.baseDate}<sub>${item.base}</sub></small></td>
+            <td>${item.sumBaseX}<sub>${item.base}</sub> &#8658; <strong>${item.archetypeX}<sub>${item.base}</sub></strong></td>
+            <td>${item.sumBase10}<sub>10</sub> &#8658; <strong>${item.archetype10}<sub>10</sub></strong></td>
+            `;
+        });
+        
+    // ${!isMobile ? `<td>${item.magic}</td>` : ""}
     container.appendChild(table);
 }
 
