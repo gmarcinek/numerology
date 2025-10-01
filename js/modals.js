@@ -103,8 +103,8 @@ function populateDetailsTable(container, data) {
             <tr>
                 <th>System Pozycyjny</th>
                 <th>Zapis Daty</th>
-                <th>BaseX</th>
-                <th>Normal</th>
+                <th>BaseX &sum;</th>
+                <th>Normal &sum;</th>
                 ${!isMobile ? '<th>Mistrzowska?</th>' : ""}
             </tr>
         </thead>

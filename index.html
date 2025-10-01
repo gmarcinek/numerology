@@ -345,6 +345,21 @@
             <span class="close" onclick="closeDetailsModal()">&times;</span>
         </div>
         <div id="details-content"></div>
+        <div>
+            <h3>Jak liczone są sumy?</h3>
+            <p>
+                Każda data jest zapisywana w różnych systemach pozycyjnych (Base&nbsp;2, Base&nbsp;3, … Base&nbsp;16).
+                Następnie obliczana jest suma cyfr (<span>&sum;</span>) w danym systemie, czyli <em>BaseX ∑</em>.
+            </p>
+            <p>
+                Dla przejrzystości wynik tej samej sumy jest także podany w systemie dziesiętnym
+                jako <em>Normal ∑</em>.
+            </p>
+            <p>
+                Jeżeli otrzymany wynik odpowiada jednej z tzw. liczb mistrzowskich (np. 11, 22),
+                w kolumnie „Mistrzowska?” pojawia się oznaczenie <strong>TAK 🎉</strong>.
+            </p>
+        </div>
     </div>
     <script>
         const wrap = document.getElementById('player');
